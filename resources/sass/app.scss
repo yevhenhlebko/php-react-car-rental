@@ -1,0 +1,52 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+@import './lib/nprogress';
+
+@import './_variables';
+@import './components/authnav';
+
+input:invalid {
+    box-shadow: none;
+}
+
+body {
+    background: black;
+}
+.ajs-header {
+    top: 20%;
+    position: absolute;
+}
+.mt-5per {
+    margin-top: 5%;
+}
+.font-julius {
+    font-family: 'Julius Sans One', sans-serif;
+}
+.font-bungee {
+    font-family: 'Bungee Hairline', cursive;
+}
+.font-inter {
+    font-family: 'Inter', sans-serif;
+}
+.form-box-shadow {
+    box-shadow: 0px 0px 1.5rem 2px #F8F8F8;
+}
+.input-icon {
+    font-size: 15px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    border-radius: 25px;
+    bottom: 0;
+    height: 100%;
+    padding-left: 35px;
+    color: #fff;
+}
