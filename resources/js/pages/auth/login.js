@@ -1,4 +1,5 @@
 import React from 'react';
+import { Input } from 'semantic-ui-react'
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
 import { login } from '../../api/auth';
@@ -46,16 +47,18 @@ function Login () {
                         LOGIN
                     </label>
                 </div>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              placeholder="email"
-              className={`bg-black appearance-none border-b-2 border-gray-200 border-opacity-25 font-inter rounded w-full py-1 px-3${email.error ? 'border-red-500' : ''}`}
-              required
-              autoFocus
-              {...email.bind} />
-
+                <div className="w-full bg-black">
+                    <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="email"
+                    className={`bg-black text-white appearance-none border-b-2 md:border-b-2 border-gray-200 border-opacity-25 font-inter rounded w-full py-1 px-3${email.error ? 'border-red-500' : ''}`}
+                    required
+                    autoFocus
+                    {...email.bind} />
+                    <i aria-hidden="true" className="fa fa-user-o text-white fa-icon"></i>
+                </div>
             {email.error && <p className="text-red-500 text-xs pt-2">{email.error}</p>}
           </div>
 
@@ -65,9 +68,10 @@ function Login () {
               id="password"
               name="password"
               placeholder="password"
-              className={`bg-black appearance-none border-b-2 border-gray-200 border-opacity-25 rounded w-full py-1 px-3${email.error ? 'border-red-500' : ''}`}
+              className={`bg-black text-white appearance-none border-b-2 border-gray-200 border-opacity-25 rounded w-full py-1 px-3${email.error ? 'border-red-500' : ''}`}
               required
               {...password.bind} />
+              <i aria-hidden="true" className="lock icon text-white fa-icon"></i>
           </div>
 
           <div className="mb-3 flex justify-end">

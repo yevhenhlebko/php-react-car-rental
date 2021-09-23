@@ -13,6 +13,7 @@ import AuthRoute from './auth-route';
 import GuestRoute from './guest-route';
 import { useAuth } from '../context/auth';
 import FullPageSpinner from '../components/full-page-spinner';
+import 'semantic-ui-css/semantic.min.css'
 
 function App () {
   let { initializing } = useAuth();
