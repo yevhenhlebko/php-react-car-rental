@@ -14,8 +14,7 @@ function Join () {
   let email = useInputValue('email');
   let name = useInputValue('name');
   let password = useInputValue('password');
-  let passwordConfirmation = useInputValue('password_confirmation');
-
+  let gocode = useInputValue('gocode');
   const handleSubmit = e => {
     e.preventDefault();
 
@@ -23,7 +22,8 @@ function Join () {
       name: name.value,
       email: email.value,
       password: password.value,
-      password_confirmation: passwordConfirmation.value
+      password_confirmation: password.value,
+
     }).then(({user, token}) => {
       setCurrentUser(user);
       setToken(token);
@@ -89,14 +89,13 @@ function Join () {
 
                 <div className="mb-4">
                     <input
-                        type="password"
-                        id="password-confirmation"
-                        name="password_confirmation"
-                        placeholder="password_confirmation"
-                        className={`bg-black text-white appearance-none border-b-2 md:border-b-2 border-gray-200 border-opacity-25 font-inter rounded w-full py-1 px-3 ${password.error ? 'border-red-500' : ''}`}
+                        type="text"
+                        id="gocode"
+                        name="gocode"
+                        placeholder="go code (optional)"
+                        className={`bg-black text-white placeholder-italic appearance-none border-b-2 md:border-b-2 border-gray-200 border-opacity-25 font-inter rounded w-full py-1 px-3 ${password.error ? 'border-red-500' : ''}`}
                         required
-                        {...passwordConfirmation.bind} />
-                        <BiLockAlt className="text-white fa-icon inline" />
+                        {...gocode.bind} />
                 </div>
 
                 <div className="mb-10 mt-10 flex justify-end">
