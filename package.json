@@ -36,10 +36,13 @@
         "whatwg-fetch": "^3.0.0"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.4",
         "@fortawesome/fontawesome-svg-core": "^1.2.36",
+        "@fortawesome/free-regular-svg-icons": "^5.15.4",
         "@fortawesome/free-solid-svg-icons": "^5.15.4",
         "@fortawesome/react-fontawesome": "^0.1.15",
         "laravel-mix-tailwind": "^0.1.0",
+        "react-icons": "^4.2.0",
         "semantic-ui-css": "^2.4.1",
         "semantic-ui-react": "^2.0.3"
     }
