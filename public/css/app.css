@@ -21637,6 +21637,18 @@ video {
           animation: bounce 1s infinite !important;
 }
 
+.placeholder-italic::-moz-placeholder {
+  font-style: italic;
+}
+
+.placeholder-italic:-ms-input-placeholder {
+  font-style: italic;
+}
+
+.placeholder-italic::placeholder {
+  font-style: italic;
+}
+
 /* Make clicks pass-through */
 
 #nprogress {

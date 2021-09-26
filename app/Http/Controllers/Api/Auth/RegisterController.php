@@ -13,13 +13,13 @@ class RegisterController extends Controller
     {
         $this->validate($request, [
             'email' => 'email|required|unique:users,email',
-            'name' => 'required|string|min:4|max:255',
+            // 'name' => 'required|string|min:4|max:255',
             'password' => 'required|string|min:8|confirmed'
         ]);
 
         $user = User::create([
             'email' => $request->email,
-            'name' => $request->name,
+            'name' => 'user',
             'password' => bcrypt($request->password),
         ]);
 

@@ -97,7 +97,7 @@ function Register () {
                       <input
                           type="password"
                           id="password-confirmation"
-                          name="password_confirmation"
+                          name="go code(optional)"
                           className={`appearance-none border rounded w-full py-1 px-3 bg-gray-100 ${password.error ? 'border-red-500' : ''}`}
                           required
                           {...passwordConfirmation.bind} />
