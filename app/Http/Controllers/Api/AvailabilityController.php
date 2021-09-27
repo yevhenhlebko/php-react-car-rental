@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Reservation;
 
 class AvailabilityController extends Controller
 {
-    public function getAvailableCars(Request $request)
+    public function getDisabledCars(Request $request)
     {
-        return new UserResource($request->user());
+        $reservationDb = new Reservation();
+        $result = $reservationDb->getDisabledCars($request->startdate, $request->enddate);
+        return response()->json($result);
     }
 }

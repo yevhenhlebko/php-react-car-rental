@@ -19,7 +19,8 @@ class CreateReservationsTable extends Migration
             $table->foreign('car_id')->references('id')->on('cars');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->dateTime('reserved_date_time');  
+            $table->dateTime('reserved_date_time');
+            $table->dateTime('due_date_time');
             $table->integer('total_hour');
             $table->integer('total_cost');
             $table->boolean('enable');
