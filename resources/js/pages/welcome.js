@@ -8,7 +8,7 @@ function Welcome () {
       <GuestNav />
       <div className="bg-black flex flex-1 flex-col items-center justify-center">
         <div className="p-8 flex flex-col items-center">
-          <div className="ajs-header text-6xl leading-loose text-white font-bungee font-bold">
+          <div className="ajs-header text-center text-6xl leading-loose text-white font-bungee font-bold">
                 AJ’s Experience
           </div>
         </div>
@@ -17,7 +17,7 @@ function Welcome () {
         </div>
         <div className="mt-5per w-1/6 h-96">
           <button className="border rounded-lg p-2 text-white bg-black w-full text-2xl font-julius hover:bg-indigo-500-dark">
-            <Link to="/login">
+            <Link to="/login" className="text-white">
                     Start
             </Link>
           </button>
