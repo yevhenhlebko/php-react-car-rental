@@ -11,6 +11,7 @@ function AuthNav () {
   const toggleMobileNav = () => setHideMobileNav(prevState => !prevState);
   const closeMobileNav = () => setHideMobileNav(true);
 
+
   const handleLogout = () => {
     setCurrentUser(null);
     setToken(null);
