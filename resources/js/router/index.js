@@ -15,7 +15,7 @@ import { useAuth } from '../context/auth';
 import FullPageSpinner from '../components/full-page-spinner';
 
 function App () {
-  let { initializing } = useAuth();
+  const { initializing } = useAuth();
   return (
     initializing
       ? <FullPageSpinner />
