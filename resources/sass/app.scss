@@ -50,3 +50,12 @@ body {
     padding-left: 35px;
     color: #fff;
 }
+.fa-icon {
+    position: absolute;
+    margin-left: -1.5rem!important;
+}
+@layer utilities {
+    .placeholder-italic::placeholder{
+      @apply italic
+    }
+  }

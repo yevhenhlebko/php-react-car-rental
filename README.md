@@ -1,17 +1,15 @@
-# Laravel-React SPA
+# Laravel-React AJS-Experience
 
-Starter Boilerplate SPA made with Laravel and React.
+AJS-Experience made with Laravel and React.
 
 ## Features
 
 - Laravel 7, React, React Router
 - React Hook, React Context for state management
 - Authentication with JWT
-- Login, register, reset password
 - Flexible Page Layout
 - Flexible, Protected Routing
 - Tailwind CSS
-- ESlint
 
 ## Installation
 
