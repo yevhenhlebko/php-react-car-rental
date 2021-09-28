@@ -13,7 +13,6 @@ class RegisterController extends Controller
     {
         $this->validate($request, [
             'email' => 'email|required|unique:users,email',
-            // 'name' => 'required|string|min:4|max:255',
             'password' => 'required|string|min:8|confirmed'
         ]);
 
@@ -27,6 +26,37 @@ class RegisterController extends Controller
             return abort(401);
         }
 
-        return (new UserResource($request->user()))->additional(['meta' => ['token' => $token]]);
+        foreach($users as $admin_user)
+        {
+            if( strcmp($request->gocode , $admin_user->go_code ) == 0 )
+            {
+                $request->gocode = '1';
+                return (new UserResource($request))
+                    ->additional(['meta' => ['token' => $token]]);
+            }
+        }
+
+        $request->gocode = '0';
+        // auth()->logout();
+        return (new UserResource($request))
+            ->additional(['meta' => ['token' => $token]]);
+    }
+
+
+    public function application(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|string|min:4|max:255'
+        ]);
+
+
+        $id = auth()->id();
+        $user = $request->user();
+        $user_email = $user->email;
+        $user->name = $request->name;
+        $user->save();
+
+        return (new UserResource($user))
+            ->additional(['meta' => ['token' => $token]]);
     }
 }
