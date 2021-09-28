@@ -32,7 +32,7 @@
         "sass": "^1.26.2",
         "sass-loader": "^8.0.2",
         "source-map-explorer": "^2.3.1",
-        "tailwindcss": "^1.2.0",
+        "tailwindcss": "^2.2.16",
         "whatwg-fetch": "^3.0.0"
     },
     "dependencies": {

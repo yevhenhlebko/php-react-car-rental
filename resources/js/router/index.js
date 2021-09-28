@@ -9,6 +9,7 @@ import ResetPassword from '../pages/auth/reset-password';
 import NotFound from '../pages/404';
 import Home from '../pages/home';
 import Profile from '../pages/profile';
+import CarSelect from '../pages/car-select';
 import AuthRoute from './auth-route';
 import GuestRoute from './guest-route';
 import { useAuth } from '../context/auth';
@@ -30,6 +31,7 @@ function App () {
             <GuestRoute path="/password/reset/:token" component={ResetPassword} title="reset password"/>
             <AuthRoute path="/home" component={Home} title="home"/>
             <AuthRoute path="/profile/:id" component={Profile} title="profile"/>
+            <AuthRoute path="/car-select" component={CarSelect} title="Car Select"/>
             <Route component={NotFound}/>
           </Switch>
         </div>
