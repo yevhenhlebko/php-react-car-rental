@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Car;
 
 class Reservation extends Model
 {
@@ -25,5 +26,35 @@ class Reservation extends Model
             return $reservation->car_id;
         })->unique();
         return $carIds;
+    }
+
+    public function confirmReservation($startDate, $endDate, $carId, $userId, $hours) {
+        try {
+            $reservations = Reservation::whereDate('reserved_date_time', '<=', \DateTime::createFromFormat('Y-m-d H:i', $endDate))
+                ->whereDate('due_date_time', '>=', \DateTime::createFromFormat('Y-m-d H:i', $startDate))
+                ->where('car_id', '=', $carId)
+                ->get();
+            if (isset($reservations) && count($reservations)) {
+                return false;
+            } else {
+                $carDb = new Car();
+                $car = $carDb->getCarById($carId);
+
+                if (isset($car)) {
+                    Reservation::create([
+                        'car_id' => $carId,
+                        'user_id' => $userId,
+                        'reserved_date_time' => $startDate,
+                        'due_date_time' => $endDate,
+                        'total_hour' => $hours,
+                        'total_cost' => $hours * $car->rate,
+                        'enable' => true
+                    ]);
+                }
+                return true;
+            }
+        } catch(Exception $e) {
+            return false;
+        }
     }
 }

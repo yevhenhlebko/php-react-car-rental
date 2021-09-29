@@ -32,6 +32,7 @@ Route::name('api.')->namespace('Api')->group(function () {
             Route::post('logout', 'LogoutController@logout')->name('logout');
         });
 
-        Route::get('disabled-cars', 'AvailabilityController@getDisabledCars')->name('getAvailableCars');
+        Route::get('disabled-cars', 'AvailabilityController@getDisabledCars')->name('getDisabledCars');
+        Route::get('confirm-reservation', 'AvailabilityController@confirmReservation')->name('confirmReservation');
     });
 });
