@@ -25,7 +25,6 @@ function Join () {
       password_confirmation: password.value,
       gocode: gocode.value
     }).then(({user, token}) => {
-        console.log('gocode',user.gocode);
         if( user.gocode )
         {
             setCurrentUser(user);

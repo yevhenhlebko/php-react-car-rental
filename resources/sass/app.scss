@@ -8,11 +8,14 @@
 
 @import './_variables';
 @import './components/authnav';
+@import './components/semantic-datetime-picker';
 
 input:invalid {
     box-shadow: none;
 }
-
+input:focus-visible {
+    outline: none!important;
+}
 body {
     background: black;
 }

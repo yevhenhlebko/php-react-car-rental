@@ -14,7 +14,6 @@ class RegisterController extends Controller
     {
         $this->validate($request, [
             'email' => 'email|required|unique:users,email',
-            // 'name' => 'required|string|min:4|max:255',
             'password' => 'required|string|min:8|confirmed'
         ]);
 
@@ -45,8 +44,26 @@ class RegisterController extends Controller
         }
 
         $request->gocode = '0';
-        // auth()->logout();
-        return (new UserResource($request))
+
+      return (new UserResource($request))
             ->additional(['meta' => ['token' => $token]]);
+    }
+
+
+    public function application(Request $request)
+    {
+        
+        $this->validate($request, [
+            'name' => 'required|string|min:4|max:255'
+        ]);
+
+        $id = auth()->id();
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->ready_review = '1';
+        $user->save();
+
+        return (new UserResource($user));
+
     }
 }

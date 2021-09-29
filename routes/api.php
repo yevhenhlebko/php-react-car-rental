@@ -18,6 +18,10 @@ Route::name('api.')->namespace('Api')->group(function () {
         Route::namespace('Auth')->group(function () {
             Route::post('login', 'LoginController')->name('login');
             Route::post('register', 'RegisterController')->name('register');
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
             // Password Reset Routes...
             Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail');
@@ -30,6 +34,9 @@ Route::name('api.')->namespace('Api')->group(function () {
         Route::namespace('Auth')->group(function () {
             Route::get('me', 'MeController@me')->name('me');
             Route::post('logout', 'LogoutController@logout')->name('logout');
+            Route::post('application', 'RegisterController@application')->name('application');
         });
+
+        Route::get('disabled-cars', 'AvailabilityController@getDisabledCars')->name('getAvailableCars');
     });
 });
