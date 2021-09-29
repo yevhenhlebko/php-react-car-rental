@@ -1,6 +1,7 @@
 import React from 'react';
 
 function Footer () {
+
   return (
     <div className="bg-gray-100 h-32 text-center">
       <div className="container mx-auto flex flex-col">

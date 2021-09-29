@@ -36,5 +36,7 @@ Route::name('api.')->namespace('Api')->group(function () {
             Route::post('logout', 'LogoutController@logout')->name('logout');
             Route::post('application', 'RegisterController@application')->name('application');
         });
+
+        Route::get('disabled-cars', 'AvailabilityController@getDisabledCars')->name('getAvailableCars');
     });
 });
