@@ -1,17 +1,17 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
-import { application } from '../../api/auth';
+import { userapproval } from '../../api/auth';
 import useInputValue from '../../components/input-value';
 
-function Application () {
+function UserApproval () {
   let history = useHistory();
   let { setCurrentUser, setToken } = useAuth();
   let name = useInputValue('name');
   const handleSubmit = e => {
     e.preventDefault();
 
-    application({
+    userapproval({
       name: name.value
     }).then(({ user }) => {
       history.push('/home');
@@ -37,7 +37,7 @@ function Application () {
           <div className="mb-4 mt-4">
             <div className="mb-4 mt-2">
               <label className="block text-white text-2xl mb-10 mt-10 text-center font-inter" htmlFor="username">
-                            Application
+                            UserApproval
               </label>
             </div>
           </div>
@@ -64,4 +64,4 @@ function Application () {
   );
 }
 
-export default Application;
+export default UserApproval;

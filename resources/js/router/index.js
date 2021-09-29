@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Welcome from '../pages/welcome';
 import Login from '../pages/auth/login';
 import Join from '../pages/auth/join';
+import Application from '../pages/auth/application';
 import Register from '../pages/auth/register';
 import ForgotPassword from '../pages/auth/forgot-password';
 import ResetPassword from '../pages/auth/reset-password';
@@ -13,6 +14,7 @@ import CarSelect from '../pages/car-select';
 import DateSelect from '../pages/date-select';
 import ReservationConfirm from '../pages/reservation-confirm';
 import AuthRoute from './auth-route';
+import AdminRoute from './admin-route';
 import GuestRoute from './guest-route';
 import { useAuth } from '../context/auth';
 import FullPageSpinner from '../components/full-page-spinner';
@@ -35,7 +37,11 @@ function App () {
             <AuthRoute path="/date-select" component={DateSelect} title="date select"/>
             <AuthRoute path="/reservation-confirm" component={ReservationConfirm} title="Reservation Confirm"/>
             <AuthRoute path="/profile/:id" component={Profile} title="profile"/>
+
+            <AuthRoute path="/application" component={Application} title="application"/>
+
             <AuthRoute path="/car-select" component={CarSelect} title="Car Select"/>
+
             <Route component={NotFound}/>
           </Switch>
         </div>
