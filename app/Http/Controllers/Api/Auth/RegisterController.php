@@ -50,16 +50,10 @@ class RegisterController extends Controller
             'name' => 'required|string|min:4|max:255'
         ]);
 
-<<<<<<< Updated upstream
-
-        $id = auth()->id();
-        $user = $request->user();
-        $user_email = $user->email;
-=======
         $id = auth()->id();
         $user = User::find($id);
->>>>>>> Stashed changes
         $user->name = $request->name;
+        $user->ready_review = '1';
         $user->save();
 
         return (new UserResource($user));
