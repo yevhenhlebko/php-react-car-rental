@@ -10,6 +10,9 @@ import ResetPassword from '../pages/auth/reset-password';
 import NotFound from '../pages/404';
 import Home from '../pages/home';
 import Profile from '../pages/profile';
+import CarSelect from '../pages/car-select';
+import DateSelect from '../pages/date-select';
+import ReservationConfirm from '../pages/reservation-confirm';
 import AuthRoute from './auth-route';
 import AdminRoute from './admin-route';
 import GuestRoute from './guest-route';
@@ -17,7 +20,7 @@ import { useAuth } from '../context/auth';
 import FullPageSpinner from '../components/full-page-spinner';
 
 function App () {
-  let { initializing } = useAuth();
+  const { initializing } = useAuth();
   return (
     initializing
       ? <FullPageSpinner />
@@ -31,8 +34,14 @@ function App () {
             <GuestRoute path="/forgot-password" component={ForgotPassword} title="forgot password"/>
             <GuestRoute path="/password/reset/:token" component={ResetPassword} title="reset password"/>
             <AuthRoute path="/home" component={Home} title="home"/>
+            <AuthRoute path="/date-select" component={DateSelect} title="date select"/>
+            <AuthRoute path="/reservation-confirm" component={ReservationConfirm} title="Reservation Confirm"/>
             <AuthRoute path="/profile/:id" component={Profile} title="profile"/>
+
             <AuthRoute path="/application" component={Application} title="application"/>
+
+            <AuthRoute path="/car-select" component={CarSelect} title="Car Select"/>
+
             <Route component={NotFound}/>
           </Switch>
         </div>

@@ -18,6 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password')->nullable();
+            $table->string('gocode')->nullable();
+            $table->string('user_type')->nullable();
+            $table->string('ready_review ')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

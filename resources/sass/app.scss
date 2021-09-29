@@ -8,11 +8,14 @@
 
 @import './_variables';
 @import './components/authnav';
+@import './components/semantic-datetime-picker';
 
 input:invalid {
     box-shadow: none;
 }
-
+input:focus-visible {
+    outline: none!important;
+}
 body {
     background: black;
 }
@@ -59,3 +62,25 @@ body {
       @apply italic
     }
   }
+
+.ui.input.semantic-ui-input {
+    & > input {
+        background-color: #000;
+        border-bottom: 1px solid white;
+        border-radius: 0px;
+        color: #fff;
+        padding: 5px 5px 5px 0px;
+
+        &:focus {
+            color: #fff;
+            background: #000;
+            border: none;
+            border-bottom: 1px solid white;
+        }
+    }
+}
+
+// custom css classes
+.width-fit-content {
+    width: fit-content;
+}

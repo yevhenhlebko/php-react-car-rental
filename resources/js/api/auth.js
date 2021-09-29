@@ -15,6 +15,13 @@ export const register = ({ email, name, password, password_confirmation }) => {
   });
 };
 
+export const application = ({ name }) => {
+  return client('/api/application', { body: { name } })
+    .then(({ data: user }) => {
+      return { user };
+    }).catch(() => null);
+};
+
 export const forgotPassword = ({ email }) => {
   return client('/api/password/email', { body: { email } })
     .then(({ status }) => status);

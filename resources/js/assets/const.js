@@ -1,0 +1,3 @@
+const MIN_RESERVATION_HOUR = 2;
+
+export { MIN_RESERVATION_HOUR };
