@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Welcome from '../pages/welcome';
 import Login from '../pages/auth/login';
 import Join from '../pages/auth/join';
+import Application from '../pages/auth/application';
 import Register from '../pages/auth/register';
 import ForgotPassword from '../pages/auth/forgot-password';
 import ResetPassword from '../pages/auth/reset-password';
@@ -30,6 +31,18 @@ function App () {
             <GuestRoute path="/password/reset/:token" component={ResetPassword} title="reset password"/>
             <AuthRoute path="/home" component={Home} title="home"/>
             <AuthRoute path="/profile/:id" component={Profile} title="profile"/>
+            <AuthRoute path="/application" component={Application} title="application"/>
+
+{/*
+            <AuthRoute path="/select-datetime" component={select-datetime} title="select-datetime"/>
+            <AuthRoute path="/select-car" component={select-car} title="select-car"/>
+            <AuthRoute path="/confirm-schedule" component={confirm-schedule} title="confirm-schedule"/>
+            <AuthRoute path="/payment-message" component={payment-message} title="payment-message"/>
+
+            <AdminRoute path="/timeslot-approve" component={Application} title="timeslotapprove"/>
+            <AdminRoute path="/user-approve" component={Application} title="userapprove"/>
+             */}
+
             <Route component={NotFound}/>
           </Switch>
         </div>
