@@ -4,6 +4,7 @@
 /storage/*.key
 /public/images/icons/.DS_Store
 /public/js/app.js
+/public/css/app.css
 /vendor
 /.idea
 /.vscode
