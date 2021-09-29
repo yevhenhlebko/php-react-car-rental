@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -22,6 +23,12 @@ class RegisterController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
+
+
+        $users = DB::table('users')->where('user_type','Administrator')->get();
+
+
+
         if (!$token = auth()->attempt($request->only(['email', 'password']))) {
             return abort(401);
         }
@@ -30,22 +37,22 @@ class RegisterController extends Controller
         {
             if( strcmp($request->gocode , $admin_user->go_code ) == 0 )
             {
-                $request->gocode = true;
+                $request->gocode = '1';
                 return (new UserResource($request))
                     ->additional(['meta' => ['token' => $token]]);
             }
         }
 
-        $request->gocode = false;
-        // auth()->logout();
-        return (new UserResource($request))
+        $request->gocode = '0';
+
+      return (new UserResource($request))
             ->additional(['meta' => ['token' => $token]]);
     }
 
 
     public function application(Request $request)
     {
-        var_dump("uiuiui");
+        
         $this->validate($request, [
             'name' => 'required|string|min:4|max:255'
         ]);
@@ -57,5 +64,6 @@ class RegisterController extends Controller
         $user->save();
 
         return (new UserResource($user));
+
     }
 }
