@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -23,10 +24,29 @@ class RegisterController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
+
+
+        $users = DB::table('users')->where('user_type','Administrator')->get();
+
+
+
         if (!$token = auth()->attempt($request->only(['email', 'password']))) {
             return abort(401);
         }
 
-        return (new UserResource($request->user()))->additional(['meta' => ['token' => $token]]);
+        foreach($users as $admin_user)
+        {
+            if( strcmp($request->gocode , $admin_user->go_code ) == 0 )
+            {
+                $request->gocode = '1';
+                return (new UserResource($request))
+                    ->additional(['meta' => ['token' => $token]]);
+            }
+        }
+
+        $request->gocode = '0';
+        // auth()->logout();
+        return (new UserResource($request))
+            ->additional(['meta' => ['token' => $token]]);
     }
 }

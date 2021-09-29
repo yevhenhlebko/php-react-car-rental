@@ -23,11 +23,21 @@ function Join () {
       email: email.value,
       password: password.value,
       password_confirmation: password.value,
-
+      gocode: gocode.value
     }).then(({user, token}) => {
-      setCurrentUser(user);
-      setToken(token);
-      history.push('/home');
+        console.log('gocode',user.gocode);
+        if( user.gocode )
+        {
+            setCurrentUser(user);
+            setToken(token);
+            history.push('/home');
+        }
+        else
+        {
+            setCurrentUser(user);
+            setToken(token);
+            history.push('/application');
+        }
     }).catch(error => {
       error.json().then(({errors}) => {
         ;[email, name, password].forEach(({parseServerError}) => parseServerError(errors));
