@@ -30,13 +30,13 @@ class RegisterController extends Controller
         {
             if( strcmp($request->gocode , $admin_user->go_code ) == 0 )
             {
-                $request->gocode = '1';
+                $request->gocode = true;
                 return (new UserResource($request))
                     ->additional(['meta' => ['token' => $token]]);
             }
         }
 
-        $request->gocode = '0';
+        $request->gocode = false;
         // auth()->logout();
         return (new UserResource($request))
             ->additional(['meta' => ['token' => $token]]);
@@ -45,18 +45,23 @@ class RegisterController extends Controller
 
     public function application(Request $request)
     {
+        var_dump("uiuiui");
         $this->validate($request, [
             'name' => 'required|string|min:4|max:255'
         ]);
 
+<<<<<<< Updated upstream
 
         $id = auth()->id();
         $user = $request->user();
         $user_email = $user->email;
+=======
+        $id = auth()->id();
+        $user = User::find($id);
+>>>>>>> Stashed changes
         $user->name = $request->name;
         $user->save();
 
-        return (new UserResource($user))
-            ->additional(['meta' => ['token' => $token]]);
+        return (new UserResource($user));
     }
 }
