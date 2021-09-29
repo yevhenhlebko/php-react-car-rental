@@ -38,6 +38,16 @@ function App () {
             <AuthRoute path="/reservation-confirm" component={ReservationConfirm} title="Reservation Confirm"/>
             <AuthRoute path="/profile/:id" component={Profile} title="profile"/>
 
+            {/*
+            <AuthRoute path="/select-datetime" component={select-datetime} title="select-datetime"/>
+            <AuthRoute path="/select-car" component={select-car} title="select-car"/>
+            <AuthRoute path="/confirm-schedule" component={confirm-schedule} title="confirm-schedule"/>
+            <AuthRoute path="/payment-message" component={payment-message} title="payment-message"/>
+
+            <AdminRoute path="/timeslot-approve" component={Application} title="timeslotapprove"/>
+            <AdminRoute path="/user-approve" component={Application} title="userapprove"/>
+             */}
+
             <AuthRoute path="/application" component={Application} title="application"/>
 
             <AuthRoute path="/car-select" component={CarSelect} title="Car Select"/>
