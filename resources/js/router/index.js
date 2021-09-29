@@ -9,6 +9,7 @@ import ResetPassword from '../pages/auth/reset-password';
 import NotFound from '../pages/404';
 import Home from '../pages/home';
 import Profile from '../pages/profile';
+import CarSelect from '../pages/car-select';
 import DateSelect from '../pages/date-select';
 import ReservationConfirm from '../pages/reservation-confirm';
 import AuthRoute from './auth-route';
@@ -34,6 +35,7 @@ function App () {
             <AuthRoute path="/date-select" component={DateSelect} title="date select"/>
             <AuthRoute path="/reservation-confirm" component={ReservationConfirm} title="Reservation Confirm"/>
             <AuthRoute path="/profile/:id" component={Profile} title="profile"/>
+            <AuthRoute path="/car-select" component={CarSelect} title="Car Select"/>
             <Route component={NotFound}/>
           </Switch>
         </div>
