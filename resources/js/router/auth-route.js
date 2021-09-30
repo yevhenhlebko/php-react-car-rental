@@ -26,7 +26,6 @@ function AuthRoute ({ component: Component, title, ...rest }) {
               <div className="flex flex-1">
                 <Component {...props} />
               </div>
-              <Footer />
             </div>
           )
           : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />;
