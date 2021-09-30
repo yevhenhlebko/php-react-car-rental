@@ -1,0 +1,65 @@
+.semantic-date-picker {
+  .ui.input {
+    width: 100%;
+
+    input[name='date'] {
+      background-color: #000 !important;
+      color: #fff;
+      border-bottom: 1px solid #fff;
+      border-radius: 0px;
+      padding-left: 0px;
+      padding-right: 0px;
+
+      &::placeholder {
+        color: #fff;
+      }
+    }
+
+    i.calendar {
+      color: #fff;
+      opacity: 1 !important;
+    }
+  }
+}
+
+.semantic-time-picker {
+  .ui.input {
+    width: 100%;
+
+    input[name='time'] {
+      background-color: #000 !important;
+      color: #fff;
+      border-bottom: 1px solid #fff;
+      border-radius: 0px;
+      padding-left: 0px;
+      padding-right: 0px;
+
+      &::placeholder {
+        color: #fff;
+      }
+    }
+    
+    i.time {
+      color: #fff;
+      opacity: 1 !important;
+    }
+  }
+}
+
+.timezone-picker {
+  input[name='timezone'] {
+    background-color: #000;
+    border: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    padding-left: 0px;
+
+    &::placeholder {
+      color: #fff;
+    }
+  }
+
+  ul {
+    background-color: #fff;
+  }
+}

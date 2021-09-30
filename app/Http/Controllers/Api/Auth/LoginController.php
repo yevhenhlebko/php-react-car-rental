@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 
 class LoginController extends Controller
 {
+
     public function __invoke(Request $request)
     {
         $this->validate($request, [
@@ -22,6 +23,7 @@ class LoginController extends Controller
                 ]
             ], 422);
         }
+
 
         return (new UserResource($request->user()))
             ->additional([
