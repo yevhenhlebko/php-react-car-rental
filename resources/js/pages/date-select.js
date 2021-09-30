@@ -49,18 +49,20 @@ function DateSelect () {
       history.push(`/car-select?date=${date}&time=${time}&timezone=${timezone}&hours=${hours}`);
     } else {
       // Show Validation Alert
-      setModalContent('Please check all fields if valid.');
-      setOpen(true);
+      if (hours < MIN_RESERVATION_HOUR) {
+        setModalContent(`Hours should be at least ${MIN_RESERVATION_HOUR}.`);
+        setOpen(true);
+        setHours(MIN_RESERVATION_HOUR);
+      } else {
+        setModalContent('Please check all fields if valid.');
+        setOpen(true);
+      }
     }
   };
 
   const hoursChange = val => {
-    if (val && parseInt(val) >= MIN_RESERVATION_HOUR) {
+    if (val) {
       setHours(parseInt(val));
-    } else {
-      setModalContent(`Hours should be at least ${MIN_RESERVATION_HOUR}.`);
-      setOpen(true);
-      setHours(MIN_RESERVATION_HOUR);
     }
   };
 

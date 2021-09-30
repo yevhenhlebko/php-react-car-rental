@@ -33,21 +33,26 @@ function ReservationConfirm () {
     }
   };
 
-  const confirmReservation = () => {};
-
-  const hoursChange = (hours) => {
-    const hoursNum = parseInt(hours);
-    if (!hoursNum || hoursNum < MIN_RESERVATION_HOUR) {
+  const confirmReservation = () => {
+    if (!hours || hours < MIN_RESERVATION_HOUR) {
       setModalContent(`Reservation hour should at least ${MIN_RESERVATION_HOUR}.`);
       setOpen(true);
       setHours(MIN_RESERVATION_HOUR);
       setTotalCost(selectedCarData.rate * MIN_RESERVATION_HOUR);
       return;
     }
-    setHours(hoursNum);
-    // calculate total cost
-    if (selectedCarData) {
-      setTotalCost(selectedCarData.rate * hoursNum);
+    // call Confirmation API
+  };
+
+  const hoursChange = (hours) => {
+    const hoursNum = parseInt(hours);
+    
+    if (hoursNum) {
+      setHours(hoursNum);
+      // calculate total cost
+      if (selectedCarData) {
+        setTotalCost(selectedCarData.rate * hoursNum);
+      }
     }
   };
 
