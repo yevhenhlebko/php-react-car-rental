@@ -22,7 +22,7 @@ class MeController extends Controller
 
     public function setUserAction(Request $request)
     {
-        var_dump($request->action,$request->id);
+        var_dump('setUserAction',$request->action,$request->id);
         $affected = false;
         if( strcmp($request->action , 'accept' ) == 0 )
         {
@@ -42,6 +42,6 @@ class MeController extends Controller
                             ->where('id', $request->id)
                             ->delete();
         }
-        return $affected;
+        return response()->json(['status' => $affected], 200);
     }
 }
