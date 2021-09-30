@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { DateInput, TimeInput } from 'semantic-ui-calendar-react';
-import CustomModal from '../components/modal';
 import TimezonePicker from 'react-timezone';
+import { Input } from 'semantic-ui-react';
 var moment = require('moment-timezone');
 
+import CustomModal from '../components/modal';
+import { MIN_RESERVATION_HOUR } from '../assets/const';
+
 function DateSelect () {
-  let [time, setTime] = useState('');
-  let [date, setDate] = useState('');
-  let [minDate, setMinDate] = useState('');
-  let [timezone, setTimezone] = useState('');
+  const history = useHistory();
+
+  const [time, setTime] = useState('');
+  const [date, setDate] = useState('');
+  const [hours, setHours] = useState();
+  const [minDate, setMinDate] = useState('');
+  const [timezone, setTimezone] = useState('');
   const [open, setOpen] = useState(false);
+  const [modalContent, setModalContent] = useState('');
 
   const dateChanged = (event, { name, value }) => {
     setDate(value);
@@ -36,11 +44,23 @@ function DateSelect () {
   };
 
   const gotoNext = () => {
-    if (date && time && timezone) {
+    if (date && time && timezone && hours >= MIN_RESERVATION_HOUR) {
       // Go to Select Car page
+      history.push(`/car-select?date=${date}&time=${time}&timezone=${timezone}&hours=${hours}`);
     } else {
       // Show Validation Alert
+      setModalContent('Please check all fields if valid.');
       setOpen(true);
+    }
+  };
+
+  const hoursChange = val => {
+    if (val && parseInt(val) >= MIN_RESERVATION_HOUR) {
+      setHours(parseInt(val));
+    } else {
+      setModalContent(`Hours should be at least ${MIN_RESERVATION_HOUR}.`);
+      setOpen(true);
+      setHours(MIN_RESERVATION_HOUR);
     }
   };
 
@@ -79,8 +99,14 @@ function DateSelect () {
             value={time}
             placeholder="Select Time"
             onChange={(event, data) => timeChanged(event, data)} />
+          <Input
+            className="semantic-ui-input mt-1"
+            value={hours}
+            placeholder="Usage Hours"
+            onChange={e => hoursChange(e.target.value)}
+          />
           <TimezonePicker
-            className="timezone-picker"
+            className="timezone-picker mt-3"
             value={timezone}
             onChange={timezone => setTimezone(timezone)}
             inputProps={{
@@ -105,7 +131,7 @@ function DateSelect () {
         show={() => setOpen(true)}
         hide={() => setOpen(false)}
         size="tiny"
-        content="Please check fields if valid."
+        content={modalContent}
       />
     </div>
   );

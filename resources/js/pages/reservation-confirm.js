@@ -27,14 +27,18 @@ function ReservationConfirm () {
   const [open, setOpen] = useState(false);
   const [modalContent, setModalContent] = useState();
 
-  const gotoBack = () => {};
+  const gotoBack = () => {
+    if (date && time && timezone && hours) {
+      history.push(`/car-select?date=${date}&time=${time}&timezone=${timezone}&hours=${hours}`);
+    }
+  };
 
   const confirmReservation = () => {};
 
   const hoursChange = (hours) => {
     const hoursNum = parseInt(hours);
     if (!hoursNum || hoursNum < MIN_RESERVATION_HOUR) {
-      setModalContent('Reservation hour should at least 2.');
+      setModalContent(`Reservation hour should at least ${MIN_RESERVATION_HOUR}.`);
       setOpen(true);
       setHours(MIN_RESERVATION_HOUR);
       setTotalCost(selectedCarData.rate * MIN_RESERVATION_HOUR);

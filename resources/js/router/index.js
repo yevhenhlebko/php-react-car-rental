@@ -49,7 +49,7 @@ function App () {
              */}
 
             <AuthRoute path="/application" component={Application} title="application"/>
-
+            <AuthRoute path="/reservation-confirm" component={ReservationConfirm} title="Reservation Confirm"/>
             <AuthRoute path="/car-select" component={CarSelect} title="Car Select"/>
 
             <Route component={NotFound}/>
