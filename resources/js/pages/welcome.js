@@ -12,7 +12,7 @@ function Welcome () {
                 AJ’s Experience
           </div>
         </div>
-        <div className="items-center">
+        <div className="mt-72 items-center">
           <img src='/images/icons/car.svg'/>
         </div>
         <div className="mt-5per w-1/6 h-96">
