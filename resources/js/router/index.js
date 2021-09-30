@@ -13,6 +13,7 @@ import Profile from '../pages/profile';
 import CarSelect from '../pages/car-select';
 import DateSelect from '../pages/date-select';
 import ReservationConfirm from '../pages/reservation-confirm';
+import PaymentConfirmation from '../pages/payment-confirm';
 import AuthRoute from './auth-route';
 import AdminRoute from './admin-route';
 import GuestRoute from './guest-route';
@@ -51,6 +52,7 @@ function App () {
             <AuthRoute path="/application" component={Application} title="application"/>
             <AuthRoute path="/reservation-confirm" component={ReservationConfirm} title="Reservation Confirm"/>
             <AuthRoute path="/car-select" component={CarSelect} title="Car Select"/>
+            <AuthRoute path="/payment-confirm" component={PaymentConfirmation} title="Payment Confirm"/>
 
             <Route component={NotFound}/>
           </Switch>
