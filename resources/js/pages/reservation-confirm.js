@@ -41,7 +41,8 @@ function ReservationConfirm () {
       setTotalCost(selectedCarData.rate * MIN_RESERVATION_HOUR);
       return;
     }
-    // call Confirmation API
+    // call Confirmation API, if success, then redirect to Payment Confirmation page
+    history.push(`/payment-confirm?total-cost=${totalCost}`);
   };
 
   const hoursChange = (hours) => {
