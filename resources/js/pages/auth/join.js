@@ -23,7 +23,7 @@ function Join () {
       email: email.value,
       password: password.value,
       password_confirmation: password.value,
-      gocode: gocode.value
+      go_code: gocode.value
     }).then(({user, token}) => {
         if( user.gocode )
         {

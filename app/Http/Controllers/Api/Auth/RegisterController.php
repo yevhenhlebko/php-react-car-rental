@@ -37,15 +37,15 @@ class RegisterController extends Controller
 
         foreach($users as $admin_user)
         {
-            if( strcmp($request->gocode , $admin_user->go_code ) == 0 )
+            if( strcmp($request->go_code , $admin_user->go_code ) == 0 )
             {
-                $request->gocode = '1';
+                $request->go_code = 1;
                 return (new UserResource($request))
                     ->additional(['meta' => ['token' => $token]]);
             }
         }
 
-        $request->gocode = '0';
+        $request->go_code = 0;
 
       return (new UserResource($request))
             ->additional(['meta' => ['token' => $token]]);

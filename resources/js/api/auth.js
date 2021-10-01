@@ -8,8 +8,8 @@ export const login = ({ email, password }) => {
 };
 
 // eslint-disable-next-line camelcase
-export const register = ({ email, name, password, password_confirmation, gocode }) => {
-  return client('/api/register', { body: { email, name, password, password_confirmation, gocode } }
+export const register = ({ email, name, password, password_confirmation, go_code }) => {
+  return client('/api/register', { body: { email, name, password, password_confirmation, go_code } }
   ).then(({ data: user, meta: { token } }) => {
     return { user, token };
   });

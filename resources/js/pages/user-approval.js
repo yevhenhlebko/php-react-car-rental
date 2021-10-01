@@ -73,6 +73,14 @@ function UserApproval () {
                                 className="border rounded-2xl px-3 py-2 text-white font-inter bg-black w-30 font-bold">
                                                                 Reject</Link>
                             </p>
+                            <p className="flex flex-col px-4 py-4 m-auto"
+                              onClick={() => userAction('delete', user.id)}
+                            >
+                              <Link
+                                to="#"
+                                className="border rounded-2xl px-3 py-2 text-white font-inter bg-black w-30 font-bold">
+                                                                Delete</Link>
+                            </p>
                           </div>
                         </td>
                       </tr>
