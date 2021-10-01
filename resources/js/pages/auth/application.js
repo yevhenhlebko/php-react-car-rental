@@ -1,12 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useAuth } from '../../context/auth';
 import { application } from '../../api/auth';
 import useInputValue from '../../components/input-value';
 
 function Application () {
   let history = useHistory();
-  let { setCurrentUser, setToken } = useAuth();
   let name = useInputValue('name');
   const handleSubmit = e => {
     e.preventDefault();

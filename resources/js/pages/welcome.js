@@ -16,11 +16,11 @@ function Welcome () {
           <img src='/images/icons/car.svg'/>
         </div>
         <div className="mt-5per w-1/6 h-96">
-          <button className="border rounded-lg p-2 text-white bg-black w-full text-2xl font-julius hover:bg-indigo-500-dark">
-            <Link to="/login" className="text-white">
+          <Link to="/login" className="text-white">
+            <button className="border rounded-lg p-2 text-white bg-black w-full text-2xl font-julius hover:bg-indigo-500-dark">
                     Start
-            </Link>
-          </button>
+            </button>
+          </Link>
         </div>
       </div>
     </div>
