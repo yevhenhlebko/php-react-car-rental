@@ -62,8 +62,10 @@ class RegisterController extends Controller
         $id = auth()->id();
         $user = User::find($id);
         $user->name = $request->name;
-        $user->ready_review = '1';
+        $user->ready_review = '0';
         $user->save();
+
+        auth()->logout();
 
         return (new UserResource($user));
 
