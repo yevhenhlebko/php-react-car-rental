@@ -103,7 +103,6 @@ function Join () {
                         name="gocode"
                         placeholder="go code (optional)"
                         className={`bg-black text-white placeholder-italic appearance-none border-b-2 md:border-b-2 border-gray-200 border-opacity-25 font-inter rounded w-full py-1 px-3 ${password.error ? 'border-red-500' : ''}`}
-                        required
                         {...gocode.bind} />
                 </div>
 
