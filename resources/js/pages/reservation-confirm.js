@@ -27,23 +27,33 @@ function ReservationConfirm () {
   const [open, setOpen] = useState(false);
   const [modalContent, setModalContent] = useState();
 
-  const gotoBack = () => {};
+  const gotoBack = () => {
+    if (date && time && timezone && hours) {
+      history.push(`/car-select?date=${date}&time=${time}&timezone=${timezone}&hours=${hours}`);
+    }
+  };
 
-  const confirmReservation = () => {};
-
-  const hoursChange = (hours) => {
-    const hoursNum = parseInt(hours);
-    if (!hoursNum || hoursNum < MIN_RESERVATION_HOUR) {
-      setModalContent('Reservation hour should at least 2.');
+  const confirmReservation = () => {
+    if (!hours || hours < MIN_RESERVATION_HOUR) {
+      setModalContent(`Reservation hour should at least ${MIN_RESERVATION_HOUR}.`);
       setOpen(true);
       setHours(MIN_RESERVATION_HOUR);
       setTotalCost(selectedCarData.rate * MIN_RESERVATION_HOUR);
       return;
     }
-    setHours(hoursNum);
-    // calculate total cost
-    if (selectedCarData) {
-      setTotalCost(selectedCarData.rate * hoursNum);
+    // call Confirmation API, if success, then redirect to Payment Confirmation page
+    history.push(`/payment-confirm?total-cost=${totalCost}`);
+  };
+
+  const hoursChange = (hours) => {
+    const hoursNum = parseInt(hours);
+    
+    if (hoursNum) {
+      setHours(hoursNum);
+      // calculate total cost
+      if (selectedCarData) {
+        setTotalCost(selectedCarData.rate * hoursNum);
+      }
     }
   };
 

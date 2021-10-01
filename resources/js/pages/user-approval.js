@@ -29,7 +29,7 @@ function UserApproval () {
 
       <div className="p-8 flex flex-col items-center">
         <div className="ajs-header text-center text-6xl leading-loose text-white font-bungee font-bold">
-                    AJ’s Experience
+            AJ’s Experience
         </div>
       </div>
 

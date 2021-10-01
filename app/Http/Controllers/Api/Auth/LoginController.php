@@ -17,9 +17,17 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        // $user = DB::table('users')->where('email',$request->email)->get()->first();
-        // $ready_review = $user->ready_review;
-        // var_dump($ready_review);
+        $user = DB::table('users')->where('email',$request->email)->get()->first();
+        $ready_review = $user->ready_review;
+
+        if($ready_review == '0')
+        {
+            return response()->json([
+                'errors' => [
+                    'email' => ['Please wait for admin acception.']
+                ]
+            ], 422);
+        }
 
         if ( !$token = auth()->attempt($request->only(['email', 'password']))) {
             return response()->json([
