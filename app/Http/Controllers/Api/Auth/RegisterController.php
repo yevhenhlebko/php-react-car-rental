@@ -20,6 +20,8 @@ class RegisterController extends Controller
         $user = User::create([
             'email' => $request->email,
             'name' => 'user',
+            'ready_review' => '0',
+            'user_type' => 'member',
             'password' => bcrypt($request->password),
         ]);
 
@@ -52,7 +54,7 @@ class RegisterController extends Controller
 
     public function application(Request $request)
     {
-        
+
         $this->validate($request, [
             'name' => 'required|string|min:4|max:255'
         ]);

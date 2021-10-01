@@ -13,6 +13,7 @@ import Profile from '../pages/profile';
 import CarSelect from '../pages/car-select';
 import DateSelect from '../pages/date-select';
 import ReservationConfirm from '../pages/reservation-confirm';
+import UserApproval from '../pages/user-approval';
 import PaymentConfirmation from '../pages/payment-confirm';
 import AuthRoute from './auth-route';
 import AdminRoute from './admin-route';

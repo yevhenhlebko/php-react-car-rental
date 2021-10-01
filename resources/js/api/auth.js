@@ -8,8 +8,8 @@ export const login = ({ email, password }) => {
 };
 
 // eslint-disable-next-line camelcase
-export const register = ({ email, name, password, password_confirmation }) => {
-  return client('/api/register', { body: { email, name, password, password_confirmation } }
+export const register = ({ email, name, password, password_confirmation, gocode }) => {
+  return client('/api/register', { body: { email, name, password, password_confirmation, gocode } }
   ).then(({ data: user, meta: { token } }) => {
     return { user, token };
   });
@@ -40,5 +40,11 @@ export const logout = () => {
 export const getUser = () => {
   return client('/api/me')
     .then(({ data }) => data)
+    .catch(() => null);
+};
+
+export const getUsers = () => {
+  return client('/api/getUsers')
+    .then(( data ) => data)
     .catch(() => null);
 };
