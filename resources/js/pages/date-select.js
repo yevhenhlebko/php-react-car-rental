@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { DateInput, TimeInput } from 'semantic-ui-calendar-react';
-import TimezonePicker from 'react-timezone';
 import { Input } from 'semantic-ui-react';
-var moment = require('moment-timezone');
 
 import CustomModal from '../components/modal';
 import { MIN_RESERVATION_HOUR } from '../assets/const';
@@ -15,7 +13,6 @@ function DateSelect () {
   const [date, setDate] = useState('');
   const [hours, setHours] = useState();
   const [minDate, setMinDate] = useState('');
-  const [timezone, setTimezone] = useState('');
   const [open, setOpen] = useState(false);
   const [modalContent, setModalContent] = useState('');
 
@@ -27,26 +24,21 @@ function DateSelect () {
     setTime(value);
   };
 
-  const getTodayDate = (timezoneOffset) => {
+  const getTodayDate = () => {
     let today = new Date();
-    if (timezoneOffset !== undefined) {
-      let d = new Date();
-      let utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-      today = new Date(utc + (60000 * timezoneOffset));
-    }
     
     let dd = String(today.getDate()).padStart(2, '0');
     let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     let yyyy = today.getFullYear();
 
-    today = yyyy + '/' + mm + '/' + dd;
+    today = mm + '-' + dd + '-' + yyyy;
     return today;
   };
 
   const gotoNext = () => {
-    if (date && time && timezone && hours >= MIN_RESERVATION_HOUR) {
+    if (date && time && hours >= MIN_RESERVATION_HOUR) {
       // Go to Select Car page
-      history.push(`/car-select?date=${date}&time=${time}&timezone=${timezone}&hours=${hours}`);
+      history.push(`/car-select?date=${date}&time=${time}&hours=${hours}`);
     } else {
       // Show Validation Alert
       if (hours < MIN_RESERVATION_HOUR) {
@@ -66,12 +58,6 @@ function DateSelect () {
     }
   };
 
-  useEffect(() => {
-    if (timezone) {
-      const utcOffset = moment().tz(timezone).utcOffset();
-      setMinDate(getTodayDate(utcOffset));
-    }
-  }, [timezone]);
 
   useEffect(() => {
     setMinDate(getTodayDate());
@@ -92,29 +78,21 @@ function DateSelect () {
             name="date"
             value={date}
             placeholder="Select Date"
+            dateFormat="MM-DD-YYYY"
             onChange={(event, data) => dateChanged(event, data)}
-            minDate={minDate}
-            dateFormat="YYYY/MM/DD" />
+            minDate={minDate} />
           <TimeInput
             className="semantic-time-picker mb-3"
             name="time"
             value={time}
             placeholder="Select Time"
+            timeFormat="AMPM"
             onChange={(event, data) => timeChanged(event, data)} />
           <Input
             className="semantic-ui-input mt-1"
-            value={hours}
             placeholder="Usage Hours"
             onChange={e => hoursChange(e.target.value)}
           />
-          <TimezonePicker
-            className="timezone-picker mt-3"
-            value={timezone}
-            onChange={timezone => setTimezone(timezone)}
-            inputProps={{
-              placeholder: 'Select Timezone',
-              name: 'timezone',
-            }} />
         </div>
 
         <div className="mb-10 mt-10 flex justify-center">

@@ -11,7 +11,7 @@ import useInputValue from '../../components/input-value';
 import GuestNav from '../../components/guest-nav';
 
 function Login () {
-  let {setCurrentUser, setToken} = useAuth();
+  let {setCurrentUser, setToken, authAdmin} = useAuth();
   let history = useHistory();
   let email = useInputValue('email');
   let password = useInputValue('password');
@@ -25,7 +25,7 @@ function Login () {
     }).then(({ user, token }) => {
       setToken(token);
       setCurrentUser(user);
-      history.push(getIntendedUrl());
+      history.push(getIntendedUrl(authAdmin));
     }).catch(error => {
       error.json().then(({errors}) => email.parseServerError(errors));
     });

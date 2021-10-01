@@ -5,6 +5,7 @@ var moment = require('moment');
 import { getDisabledCars } from '../api/availability';
 import { carArray } from '../assets/car-array';
 import { MIN_RESERVATION_HOUR } from '../assets/const';
+import CustomModal from '../components/modal';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -15,6 +16,8 @@ function CarSelect () {
   const history = useHistory();
   const [selectedCarIndex, setSelectedCarIndex] = useState();
   const [enableNext, setEnableNext] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [modalContent, setModalContent] = useState('');
 
   const gotoBack = () => {
     history.push('/date-select');
@@ -23,10 +26,12 @@ function CarSelect () {
   const gotoNext = () => {
     const date = query.get('date');
     const time = query.get('time');
-    const timezone = query.get('timezone');
     const hours = query.get('hours');
-    if (enableNext && selectedCarIndex && date && time && timezone && hours) {
-      history.push(`/reservation-confirm?date=${date}&time=${time}&timezone=${timezone}&hours=${hours}&car-id=${selectedCarIndex}`);
+    if (enableNext && selectedCarIndex && date && time && hours) {
+      history.push(`/reservation-confirm?date=${date}&time=${time}&hours=${hours}&car-id=${selectedCarIndex}`);
+    } else {
+      setModalContent("You don't select valid car or DateTime is not selected in the previous step.");
+      setOpen(true);
     }
   };
 
@@ -38,13 +43,10 @@ function CarSelect () {
   useEffect(() => {
     const date = query.get('date');
     const time = query.get('time');
-    const timezone = query.get('timezone');
     const hours = parseInt(query.get('hours'));
-    if (date && time && timezone && hours >= MIN_RESERVATION_HOUR) {
-      const momentStartDate = moment.tz(`${date} ${time}`, 'YYYY/MM/DD HH:mm', timezone);
-      const momentEndDate = moment.tz(`${date} ${time}`, 'YYYY/MM/DD HH:mm', timezone).add(hours, 'hours');
-      momentStartDate.utc();
-      momentEndDate.utc();
+    if (date && time && hours >= MIN_RESERVATION_HOUR) {
+      const momentStartDate = moment('MM-DD-YYYY hh:mm A', `${date} ${time}`);
+      const momentEndDate = moment('MM-DD-YYYY hh:mm A', `${date} ${time}`).add(hours, 'hours');
       const startDate = momentStartDate.format('YYYY-MM-DD HH:mm');
       const endDate = momentEndDate.format('YYYY-MM-DD HH:mm');
       getDisabledCars({ startDate, endDate }).then(res => {});
@@ -91,6 +93,14 @@ function CarSelect () {
           </button>
         </div>
       </div>      
+
+      <CustomModal
+        open={open}
+        show={() => setOpen(true)}
+        hide={() => setOpen(false)}
+        size="tiny"
+        content={modalContent}
+      />
     </div>
   );
 }

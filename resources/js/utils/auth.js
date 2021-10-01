@@ -1,6 +1,7 @@
 const authToken = 'auth_token';
 const intendedUrl = 'intendedUrl';
-const defaultIntendedUrl = '/home';
+const memberIntendedUrl = '/date-select';
+const adminIntendedUrl = '/slot-management';
 
 export const getToken = () => window.localStorage.getItem(authToken);
 
@@ -10,7 +11,8 @@ export const setToken = token => {
     : window.localStorage.removeItem(authToken);
 };
 
-export const getIntendedUrl = () => window.localStorage.getItem(intendedUrl) || defaultIntendedUrl;
+export const getIntendedUrl = (isAdmin) => window.localStorage.getItem(intendedUrl) ||
+  (isAdmin ? adminIntendedUrl : memberIntendedUrl);
 
 export const setIntendedUrl = url => {
   url
