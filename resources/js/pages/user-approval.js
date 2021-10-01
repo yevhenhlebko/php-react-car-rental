@@ -30,11 +30,11 @@ function UserApproval () {
 
       <div className="p-8 flex flex-col items-center">
         <div className="ajs-header text-center text-6xl leading-loose text-white font-bungee font-bold">
-                    AJ’s Experience
+            AJ’s Experience
         </div>
       </div>
 
-      <div className="box-border overflow-hidden text-2xl form-box-shadow mix-blend-normal rounded-3xl border-grey-light w-3/4 sm:w-1/2 lg:w-3/5 xl:w-3/5 px-8 py-4 bg-black">
+      <div className="mt-72 lg:mt-2 xl:mt-2 box-border overflow-hidden text-2xl form-box-shadow mix-blend-normal rounded-3xl border-grey-light w-3/4 sm:w-1/2 lg:w-3/5 xl:w-3/5 px-8 py-4 bg-black">
         <div className="mb-4 mt-4">
           <div className="card-body bg-black text-white appearance-none  font-inter rounded w-full py-1 px-3">
             <table>

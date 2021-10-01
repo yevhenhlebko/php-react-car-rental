@@ -31,7 +31,7 @@ function AdminRoute ({ component: Component, title, ...rest }) {
               </div>
             );
           } else {
-            return (<Redirect to={{ pathname: '/home', state: { from: props.location } }} />);
+            return (<Redirect to={{ pathname: '/car-select', state: { from: props.location } }} />);
           }
         } else { return (<Redirect to={{ pathname: '/login', state: { from: props.location } }} />); }
       }

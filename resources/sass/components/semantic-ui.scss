@@ -1,0 +1,20 @@
+.ui.input.semantic-ui-input {
+  & > input {
+    background-color: #000;
+    border-bottom: 1px solid white;
+    border-radius: 0px;
+    color: #fff;
+    padding: 5px 5px 5px 0px;
+
+    &:focus {
+      color: #fff;
+      background: #000;
+      border: none;
+      border-bottom: 1px solid white;
+    }
+
+    &::placeholder {
+      color: #fff;
+    }
+  }
+}
