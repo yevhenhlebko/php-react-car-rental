@@ -14,6 +14,7 @@ import CarSelect from '../pages/car-select';
 import DateSelect from '../pages/date-select';
 import ReservationConfirm from '../pages/reservation-confirm';
 import UserApproval from '../pages/user-approval';
+import PaymentConfirmation from '../pages/payment-confirm';
 import AuthRoute from './auth-route';
 import AdminRoute from './admin-route';
 import GuestRoute from './guest-route';
@@ -34,25 +35,16 @@ function App () {
             <GuestRoute path="/join" component={Join} title="join"/>
             <GuestRoute path="/forgot-password" component={ForgotPassword} title="forgot password"/>
             <GuestRoute path="/password/reset/:token" component={ResetPassword} title="reset password"/>
-            <AuthRoute path="/home" component={Home} title="home"/>
+            <AuthRoute path="/home" component={CarSelect} title="Car Select"/>
             <AuthRoute path="/date-select" component={DateSelect} title="date select"/>
             <AuthRoute path="/reservation-confirm" component={ReservationConfirm} title="Reservation Confirm"/>
             <AuthRoute path="/profile/:id" component={Profile} title="profile"/>
 
-            {/*
-            <AuthRoute path="/select-datetime" component={select-datetime} title="select-datetime"/>
-            <AuthRoute path="/select-car" component={select-car} title="select-car"/>
-            <AuthRoute path="/confirm-schedule" component={confirm-schedule} title="confirm-schedule"/>
-            <AuthRoute path="/payment-message" component={payment-message} title="payment-message"/>
-
-            <AdminRoute path="/timeslot-approve" component={Application} title="timeslotapprove"/>
-            <AdminRoute path="/user-approve" component={Application} title="userapprove"/>
-             */}
-
             <AdminRoute path="/user-approve" component={UserApproval} title="userapprove"/>
             <AuthRoute path="/application" component={Application} title="application"/>
-
+            <AuthRoute path="/reservation-confirm" component={ReservationConfirm} title="Reservation Confirm"/>
             <AuthRoute path="/car-select" component={CarSelect} title="Car Select"/>
+            <AuthRoute path="/payment-confirm" component={PaymentConfirmation} title="Payment Confirm"/>
 
             <Route component={NotFound}/>
           </Switch>

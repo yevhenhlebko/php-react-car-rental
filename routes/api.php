@@ -19,7 +19,7 @@ Route::name('api.')->namespace('Api')->group(function () {
             Route::post('login', 'LoginController')->name('login');
             Route::post('register', 'RegisterController')->name('register');
 
-            // Password Reset Routes...
+          // Password Reset Routes...
             Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail');
             Route::post('password/reset', 'ResetPasswordController@reset');
         });
@@ -36,9 +36,8 @@ Route::name('api.')->namespace('Api')->group(function () {
 
         });
 
-        Route::get('disabled-cars', 'AvailabilityController@getDisabledCars')->name('getAvailableCars');
-
-
+        Route::get('disabled-cars', 'AvailabilityController@getDisabledCars')->name('getDisabledCars');
+        Route::get('confirm-reservation', 'AvailabilityController@confirmReservation')->name('confirmReservation');
 
     });
 });
