@@ -4,7 +4,6 @@ import { setIntendedUrl } from '../utils/auth';
 import PropTypes from 'prop-types';
 import { useAuth } from '../context/auth';
 import AuthNav from '../components/auth-nav';
-import Footer from '../components/footer';
 import useDocumentTitle from '../components/document-title';
 
 function AuthRoute ({ component: Component, title, ...rest }) {
