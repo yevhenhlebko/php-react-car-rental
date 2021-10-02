@@ -35,7 +35,6 @@ function App () {
             <GuestRoute path="/join" component={Join} title="join"/>
             <GuestRoute path="/forgot-password" component={ForgotPassword} title="forgot password"/>
             <GuestRoute path="/password/reset/:token" component={ResetPassword} title="reset password"/>
-            <AuthRoute path="/home" component={CarSelect} title="Car Select"/>
             <AuthRoute path="/date-select" component={DateSelect} title="date select"/>
             <AuthRoute path="/reservation-confirm" component={ReservationConfirm} title="Reservation Confirm"/>
             <AuthRoute path="/profile/:id" component={Profile} title="profile"/>
