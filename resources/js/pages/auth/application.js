@@ -1,12 +1,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useAuth } from '../../context/auth';
 import { application } from '../../api/auth';
 import useInputValue from '../../components/input-value';
+import { useAuth } from '../../context/auth';
+import { setIntendedUrl } from '../../utils/auth';
 
 function Application () {
-  let history = useHistory();
   let { setCurrentUser, setToken } = useAuth();
+  let history = useHistory();
   let name = useInputValue('name');
   const handleSubmit = e => {
     e.preventDefault();
@@ -14,10 +15,16 @@ function Application () {
     application({
       name: name.value
     }).then(({ user }) => {
-      history.push('/home');
+      setCurrentUser(null);
+      setToken(null);
+      history.push('/');
+      setIntendedUrl(null);
     }).catch(error => {
       console.log('error', error);
-      history.push('/home');
+      setCurrentUser(null);
+      setToken(null);
+      history.push('/');
+      setIntendedUrl(null);
     });
   };
 
@@ -30,7 +37,7 @@ function Application () {
         </div>
       </div>
 
-      <div className="box-border form-box-shadow mix-blend-normal rounded-3xl border-grey-light w-3/4 sm:w-1/2 lg:w-2/5 xl:w-1/4 px-8 py-4 bg-black">
+      <div className="mt-72 lg:mt-2 xl:mt-2 box-border form-box-shadow mix-blend-normal rounded-3xl border-grey-light w-3/4 sm:w-1/2 lg:w-2/5 xl:w-1/4 px-8 py-4 bg-black">
         <form onSubmit={handleSubmit}
           method="POST"
         >

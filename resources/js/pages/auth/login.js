@@ -11,7 +11,7 @@ import useInputValue from '../../components/input-value';
 import GuestNav from '../../components/guest-nav';
 
 function Login () {
-  let {setCurrentUser, setToken} = useAuth();
+  let {setCurrentUser, setToken, authAdmin} = useAuth();
   let history = useHistory();
   let email = useInputValue('email');
   let password = useInputValue('password');
@@ -24,8 +24,10 @@ function Login () {
       password: password.value
     }).then(({ user, token }) => {
       setToken(token);
+      setInitializing(false);
       setCurrentUser(user);
-      history.push(getIntendedUrl());
+      history.push(getIntendedUrl(authAdmin));
+
     }).catch(error => {
       error.json().then(({errors}) => email.parseServerError(errors));
     });
@@ -41,7 +43,7 @@ function Login () {
                 </div>
             </div>
 
-            <div className="box-border form-box-shadow mix-blend-normal rounded-3xl border-grey-light w-3/4 sm:w-1/2 lg:w-2/5 xl:w-1/4 px-8 py-4 bg-black">
+            <div className="mt-72 lg:mt-2 xl:mt-2 box-border form-box-shadow mix-blend-normal rounded-3xl border-grey-light w-3/4 sm:w-1/2 lg:w-2/5 xl:w-1/4 px-8 py-4 bg-black">
             <form onSubmit={handleSubmit}
             method="POST">
             <div className="mb-4 mt-4">

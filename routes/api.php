@@ -18,7 +18,8 @@ Route::name('api.')->namespace('Api')->group(function () {
         Route::namespace('Auth')->group(function () {
             Route::post('login', 'LoginController')->name('login');
             Route::post('register', 'RegisterController')->name('register');
-            // Password Reset Routes...
+
+          // Password Reset Routes...
             Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail');
             Route::post('password/reset', 'ResetPasswordController@reset');
         });
@@ -28,11 +29,15 @@ Route::name('api.')->namespace('Api')->group(function () {
     Route::middleware('auth:api')->group(function () {
         Route::namespace('Auth')->group(function () {
             Route::get('me', 'MeController@me')->name('me');
+            Route::get('getUsers', 'MeController@getUsers')->name('getUsers');
             Route::post('logout', 'LogoutController@logout')->name('logout');
             Route::post('application', 'RegisterController@application')->name('application');
+            Route::post('setUserAction', 'MeController@setUserAction')->name('setuseraction');
+
         });
 
         Route::get('disabled-cars', 'AvailabilityController@getDisabledCars')->name('getDisabledCars');
         Route::get('confirm-reservation', 'AvailabilityController@confirmReservation')->name('confirmReservation');
+
     });
 });

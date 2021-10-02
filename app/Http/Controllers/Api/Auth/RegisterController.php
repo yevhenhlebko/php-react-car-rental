@@ -20,6 +20,8 @@ class RegisterController extends Controller
         $user = User::create([
             'email' => $request->email,
             'name' => 'user',
+            'ready_review' => '0',
+            'user_type' => 'member',
             'password' => bcrypt($request->password),
         ]);
 
@@ -35,15 +37,15 @@ class RegisterController extends Controller
 
         foreach($users as $admin_user)
         {
-            if( strcmp($request->gocode , $admin_user->go_code ) == 0 )
+            if( strcmp($request->go_code , $admin_user->go_code ) == 0 )
             {
-                $request->gocode = '1';
+                $request->go_code = 1;
                 return (new UserResource($request))
                     ->additional(['meta' => ['token' => $token]]);
             }
         }
 
-        $request->gocode = '0';
+        $request->go_code = 0;
 
       return (new UserResource($request))
             ->additional(['meta' => ['token' => $token]]);
@@ -52,7 +54,7 @@ class RegisterController extends Controller
 
     public function application(Request $request)
     {
-        
+
         $this->validate($request, [
             'name' => 'required|string|min:4|max:255'
         ]);
@@ -60,8 +62,10 @@ class RegisterController extends Controller
         $id = auth()->id();
         $user = User::find($id);
         $user->name = $request->name;
-        $user->ready_review = '1';
+        $user->ready_review = '0';
         $user->save();
+
+        auth()->logout();
 
         return (new UserResource($user));
 

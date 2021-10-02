@@ -20,7 +20,6 @@ function ReservationConfirm () {
   const [rate, setRate] = useState(0);
   const [carName, setCarName] = useState("");
   const [totalCost, setTotalCost] = useState(0);
-  const [timezone, setTimezone] = useState(0);
   const [carId, setCarId] = useState();
   const [selectedCarData, setSelectedCarData] = useState();
 
@@ -28,8 +27,8 @@ function ReservationConfirm () {
   const [modalContent, setModalContent] = useState();
 
   const gotoBack = () => {
-    if (date && time && timezone && hours) {
-      history.push(`/car-select?date=${date}&time=${time}&timezone=${timezone}&hours=${hours}`);
+    if (date && time && hours) {
+      history.push(`/car-select?date=${date}&time=${time}&hours=${hours}`);
     }
   };
 
@@ -41,7 +40,8 @@ function ReservationConfirm () {
       setTotalCost(selectedCarData.rate * MIN_RESERVATION_HOUR);
       return;
     }
-    // call Confirmation API
+    // call Confirmation API, if success, then redirect to Payment Confirmation page
+    history.push(`/payment-confirm?total-cost=${totalCost}`);
   };
 
   const hoursChange = (hours) => {
@@ -60,7 +60,6 @@ function ReservationConfirm () {
     setDate(query.get('date'));
     setTime(query.get('time'));
     setHours(parseInt(query.get('hours')));
-    setTimezone(query.get('timezone'));
     setCarId(parseInt(query.get('car-id')));
 
     if (!query.get('date') || !query.get('time') || parseInt(query.get('hours')) < 2) {

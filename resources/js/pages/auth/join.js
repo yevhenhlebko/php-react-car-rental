@@ -23,7 +23,7 @@ function Join () {
       email: email.value,
       password: password.value,
       password_confirmation: password.value,
-      gocode: gocode.value
+      go_code: gocode.value
     }).then(({user, token}) => {
         if( user.gocode )
         {
@@ -55,7 +55,7 @@ function Join () {
             </div>
         </div>
 
-        <div className="box-border form-box-shadow mix-blend-normal rounded-3xl border-grey-light w-3/4 sm:w-1/2 lg:w-2/5 xl:w-1/4 px-8 py-4 bg-black">
+        <div className="mt-72 lg:mt-2 xl:mt-2 box-border form-box-shadow mix-blend-normal rounded-3xl border-grey-light w-3/4 sm:w-1/2 lg:w-2/5 xl:w-1/4 px-8 py-4 bg-black">
             <form onSubmit={handleSubmit}
                 method="POST"
             >
@@ -103,7 +103,6 @@ function Join () {
                         name="gocode"
                         placeholder="go code (optional)"
                         className={`bg-black text-white placeholder-italic appearance-none border-b-2 md:border-b-2 border-gray-200 border-opacity-25 font-inter rounded w-full py-1 px-3 ${password.error ? 'border-red-500' : ''}`}
-                        required
                         {...gocode.bind} />
                 </div>
 
