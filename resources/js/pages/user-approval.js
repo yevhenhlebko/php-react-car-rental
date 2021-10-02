@@ -20,7 +20,6 @@ function UserApproval () {
   };
   useEffect(() => {
     getUsers().then((users) => {
-      console.log('userss', users);
       setCurrentUsers(users);
     });
   }, [actionChanged]);
@@ -35,7 +34,7 @@ function UserApproval () {
       </div>
 
       <div className="mt-72 lg:mt-2 xl:mt-2 box-border overflow-hidden text-2xl form-box-shadow mix-blend-normal rounded-3xl border-grey-light w-3/4 sm:w-1/2 lg:w-3/5 xl:w-3/5 px-8 py-4 bg-black">
-        <div className="mb-4 mt-4">
+        <div className="overflow-auto mb-4 mt-4">
           <div className="card-body bg-black text-white appearance-none  font-inter rounded w-full py-1 px-3">
             <table>
               <thead>
@@ -63,7 +62,7 @@ function UserApproval () {
                             >
                               <Link
                                 to="#"
-                                className="no-underline text-white font-julius font-normal text-opacity-75">
+                                className="border rounded-2xl px-3 py-2 text-white font-inter bg-black w-30 font-bold">
                                                                 Accept</Link>
                             </p>
                             <p className="flex flex-col px-4 py-4 m-auto"
@@ -71,8 +70,16 @@ function UserApproval () {
                             >
                               <Link
                                 to="#"
-                                className="no-underline text-white font-julius font-normal text-opacity-75">
+                                className="border rounded-2xl px-3 py-2 text-white font-inter bg-black w-30 font-bold">
                                                                 Reject</Link>
+                            </p>
+                            <p className="flex flex-col px-4 py-4 m-auto"
+                              onClick={() => userAction('delete', user.id)}
+                            >
+                              <Link
+                                to="#"
+                                className="border rounded-2xl px-3 py-2 text-white font-inter bg-black w-30 font-bold">
+                                                                Delete</Link>
                             </p>
                           </div>
                         </td>

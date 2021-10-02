@@ -1,12 +1,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useAuth } from '../../context/auth';
 import { application } from '../../api/auth';
 import useInputValue from '../../components/input-value';
+import { useAuth } from '../../context/auth';
+import { setIntendedUrl } from '../../utils/auth';
 
 function Application () {
-  let history = useHistory();
   let { setCurrentUser, setToken } = useAuth();
+  let history = useHistory();
   let name = useInputValue('name');
   const handleSubmit = e => {
     e.preventDefault();
@@ -14,10 +15,16 @@ function Application () {
     application({
       name: name.value
     }).then(({ user }) => {
-      history.push('/home');
+      setCurrentUser(null);
+      setToken(null);
+      history.push('/');
+      setIntendedUrl(null);
     }).catch(error => {
       console.log('error', error);
-      history.push('/home');
+      setCurrentUser(null);
+      setToken(null);
+      history.push('/');
+      setIntendedUrl(null);
     });
   };
 

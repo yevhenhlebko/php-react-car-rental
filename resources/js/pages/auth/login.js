@@ -24,8 +24,10 @@ function Login () {
       password: password.value
     }).then(({ user, token }) => {
       setToken(token);
+      setInitializing(false);
       setCurrentUser(user);
       history.push(getIntendedUrl(authAdmin));
+
     }).catch(error => {
       error.json().then(({errors}) => email.parseServerError(errors));
     });

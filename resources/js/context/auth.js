@@ -10,7 +10,7 @@ AuthProvider.propTypes = {
 };
 
 function AuthProvider ({ children }) {
-  const [initializing, setInitializing] = useState(true);
+  const [initializing, setInitializing] = useState();
   const [currentUser, setCurrentUser] = useState(null);
   const [userAdmin, setUserAdmin] = useState(null);
   const authenticated = useMemo(() => !!currentUser, [currentUser]);
@@ -22,25 +22,37 @@ function AuthProvider ({ children }) {
       : Promise.resolve(null);
   };
 
+  const initAuthAdmin = () => {
+    initAuth().then((user) => {
+      if (user != null) {
+        if (user.user_type == 'Administrator') {
+          setUserAdmin(true);
+        } else { setUserAdmin(false); }
+      } else { setUserAdmin(false); }
+      setCurrentUser(user);
+    });
+  };
+
   useEffect(() => {
     initAuth().then((user) => {
-      console.log('user', user);
       if (user != null) {
         if (user.user_type == 'Administrator') {
           setUserAdmin(user.user_type);
         }
       }
       setCurrentUser(user);
-      setInitializing(false);
     });
-  }, []);
+  }, [initializing]);
 
   return (
     <AuthContext.Provider value={{
       initializing,
       authenticated,
       authAdmin,
+      userAdmin,
       currentUser,
+      initAuthAdmin,
+      setInitializing,
       setToken,
       setCurrentUser }
     }> { children }
