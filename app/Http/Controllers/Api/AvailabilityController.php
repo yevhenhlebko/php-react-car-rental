@@ -18,9 +18,25 @@ class AvailabilityController extends Controller
 
     public function confirmReservation(Request $request) {
         $reservationDb = new Reservation();
-        $result = $reservationDb->confirmReservation($request->startdate, $request->enddate, $request->carid, $request->userid, $request->hours);
+        $result = $reservationDb->confirmReservation($request->id);
         return response()->json(array(
-            'success' => $result
+            'reservation' => $result,
+        ));
+    }
+
+    public function pendReservation(Request $request) {
+        $reservationDb = new Reservation();
+        $result = $reservationDb->pendReservation($request->startdate, $request->enddate, $request->carid, $request->userid, $request->hours);
+        return response()->json(array(
+            'reservation' => $result,
+        ));
+    }
+
+    public function getReservationList(Request $request) {
+        $reservationDb = new Reservation();
+        $result = $reservationDb->getReservationList();
+        return response()->json(array(
+            'reservation' => $result,
         ));
     }
 }
