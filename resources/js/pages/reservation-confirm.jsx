@@ -7,11 +7,11 @@ import { MIN_RESERVATION_HOUR } from "../assets/const";
 import { useAuth } from "../context/auth";
 import qs from "query-string";
 import { getAllCars } from "../api/cars";
-import { confirmAvailability } from "../api/availability";
+import { createReservation } from "../api/availability";
 
 function ReservationConfirm() {
   const {
-    currentUser: { userId },
+    currentUser: { id: userId },
   } = useAuth();
   const [cars, setCars] = useState([]);
   const { search } = useLocation();
@@ -56,7 +56,7 @@ function ReservationConfirm() {
     }
   }, [date, time, hours, history]);
 
-  const confirmReservation = useCallback(() => {
+  const handleConfirmReservation = useCallback(() => {
     if (!hours || hours < MIN_RESERVATION_HOUR) {
       setModalContent(`Reservation should be at least ${MIN_RESERVATION_HOUR} hours.`);
       setOpen(true);
@@ -65,20 +65,15 @@ function ReservationConfirm() {
     }
 
     setLoading(true);
-    const time = moment(time);
-    const startDate = moment(date)
-      .set({
-        hours: time.hours,
-        minutes: time.minutes,
-      })
-      .tz("America/Los_Angeles")
+    const startDate = moment(`${date} ${time}`)
+      .tz("America/Los_Angeles", true)
       .toISOString();
     const endDate = moment(startDate)
       .add(hours, "hours")
       .toISOString();
-    confirmAvailability({ startDate, endDate, carId, userId, hours })
-      .then((status) => {
-        if (status.success) {
+    createReservation({ startDate, endDate, carId, userId, hours })
+      .then((response) => {
+        if (response.reservation && response.reservation.user_id) {
           history.push(`/payment-confirm?total-cost=${totalCost}`);
         }
         // eslint-disable-next-line handle-callback-err
@@ -88,7 +83,7 @@ function ReservationConfirm() {
         setLoading(false);
       });
     // call Confirmation API, if success, then redirect to Payment Confirmation page
-  }, [date, time, hours, carId, userId, totalCost, confirmAvailability, setLoading, history]);
+  }, [date, time, hours, carId, userId, totalCost, createReservation, setLoading, history]);
 
   const hoursChange = useCallback(
     (hours) => {
@@ -156,7 +151,7 @@ function ReservationConfirm() {
 
           <button
             className="border rounded-lg px-3 py-2 text-white font-inter bg-black w-32 font-bold capitalize"
-            onClick={confirmReservation}
+            onClick={handleConfirmReservation}
             disabled={loading}
           >
             Confirm

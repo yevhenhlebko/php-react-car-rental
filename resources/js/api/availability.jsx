@@ -5,7 +5,7 @@ export const getDisabledCars = ({ startDate, endDate }) =>
     .then((data) => data)
     .catch(() => null);
 
-export const confirmAvailability = ({ startDate, endDate, carId, userId, hours }) =>
-  client(`/api/confirm-reservation`, { method: "POST", body: { startDate, endDate, carId, userId, hours } })
+export const createReservation = ({ startDate, endDate, carId, userId, hours }) =>
+  client(`/api/reservation`, { method: "POST", body: { startDate, endDate, carId, userId, hours } })
     .then((data) => data)
     .catch(() => null);

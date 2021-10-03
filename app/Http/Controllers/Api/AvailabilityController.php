@@ -12,7 +12,7 @@ class AvailabilityController extends Controller
     public function getDisabledCars(Request $request)
     {
         $reservationDb = new Reservation();
-        $result = $reservationDb->getDisabledCars($request->startdate, $request->enddate);
+        $result = $reservationDb->getDisabledCars($request->startDate, $request->endDate);
         return response()->json($result);
     }
 
@@ -26,7 +26,7 @@ class AvailabilityController extends Controller
 
     public function pendReservation(Request $request) {
         $reservationDb = new Reservation();
-        $result = $reservationDb->pendReservation($request->startdate, $request->enddate, $request->carid, $request->userid, $request->hours);
+        $result = $reservationDb->pendReservation($request->startDate, $request->endDate, $request->carId, $request->userId, $request->hours);
         return response()->json(array(
             'reservation' => $result,
         ));
