@@ -33,11 +33,12 @@ Route::name('api.')->namespace('Api')->group(function () {
             Route::post('logout', 'LogoutController@logout')->name('logout');
             Route::post('application', 'RegisterController@application')->name('application');
             Route::post('setUserAction', 'MeController@setUserAction')->name('setuseraction');
-
         });
 
         Route::get('disabled-cars', 'AvailabilityController@getDisabledCars')->name('getDisabledCars');
         Route::get('confirm-reservation', 'AvailabilityController@confirmReservation')->name('confirmReservation');
-
+        Route::get('reservations', 'ReservationController@getAllReservations')->name('getAllReservations');
+        Route::post('accept-reservation', 'ReservationController@acceptReservation')->name('acceptReservation');
+        Route::post('decline-reservation', 'ReservationController@declineReservation')->name('declineReservation');
     });
 });
