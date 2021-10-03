@@ -19,9 +19,7 @@ function Login() {
       email: email.value,
       password: password.value,
     })
-      .then((url) => {
-        history.push(url);
-      })
+      .then((url) => {})
       .catch((e) => {
         e.json().then(({ errors }) => email.parseServerError(errors));
       });

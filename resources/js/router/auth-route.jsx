@@ -9,7 +9,7 @@ import useDocumentTitle from "../components/document-title";
 function AuthRoute({ component: Component, title, ...rest }) {
   useDocumentTitle(title);
   const history = useHistory();
-  const { authenticated, isInitialized, isAdmin } = useAuth();
+  const { authenticated, isInitialized, isAdmin, isVerified } = useAuth();
   const intendedRoute = useMemo(() => getIntendedUrl(isAdmin), [isAdmin]);
 
   // useEffect(() => {
@@ -26,17 +26,26 @@ function AuthRoute({ component: Component, title, ...rest }) {
         //   setIntendedUrl(props.location.pathname);
         //   return null;
         // }
+        if (!isInitialized) {
+          return null;
+        }
 
-        return authenticated ? (
-          <div className="flex flex-col min-h-screen">
-            <AuthNav />
-            <div className="flex flex-1">
-              <Component {...props} />
-            </div>
-          </div>
-        ) : (
-          <Redirect to={{ pathname: "/login", state: { from: props.location } }} />
-        );
+        if (authenticated) {
+          if (isVerified || props.location.pathname === "/home") {
+            return (
+              <div className="flex flex-col min-h-screen">
+                <AuthNav />
+                <div className="flex flex-1">
+                  <Component {...props} />
+                </div>
+              </div>
+            );
+          } else {
+            return <Redirect to={{ pathname: "/home", state: { from: props.location } }} />;
+          }
+        } else {
+          return <Redirect to={{ pathname: "/login", state: { from: props.location } }} />;
+        }
       }}
     />
   );

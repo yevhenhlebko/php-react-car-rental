@@ -1,91 +1,104 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import { Input } from "semantic-ui-react";
-
-import { carArray } from "../assets/car-array";
+import moment from "moment-timezone";
 import CustomModal from "../components/modal";
 import { MIN_RESERVATION_HOUR } from "../assets/const";
-import { reservation } from "../api/reservation";
-
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
+import { useAuth } from "../context/auth";
+import qs from "query-string";
+import { getAllCars } from "../api/cars";
+import { confirmAvailability } from "../api/availability";
 
 function ReservationConfirm() {
-  const query = useQuery();
+  const {
+    currentUser: { userId },
+  } = useAuth();
+  const [cars, setCars] = useState([]);
+  const { search } = useLocation();
+  const { hours: selectedHours, date, time, carId } = qs.parse(search);
   const history = useHistory();
 
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [hours, setHours] = useState(0);
-  const [rate, setRate] = useState(0);
-  const [carName, setCarName] = useState("");
+  const [hours, setHours] = useState(parseInt(selectedHours));
   const [totalCost, setTotalCost] = useState(0);
-  const [carId, setCarId] = useState();
   const [selectedCarData, setSelectedCarData] = useState();
 
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [modalContent, setModalContent] = useState();
 
-  const gotoBack = () => {
+  useEffect(() => {
+    getAllCars().then((cars) => {
+      setCars(cars);
+    });
+  }, [getAllCars, setCars]);
+
+  useEffect(() => {
+    if (selectedCarData && selectedCarData.rate && hours >= 0) {
+      setTotalCost(selectedCarData.rate * hours);
+    }
+  }, [selectedCarData, hours]);
+
+  useEffect(() => {
+    if (cars.length > 0 && carId) {
+      const carData = cars.find((item) => item.id === parseInt(carId));
+      if (!carData) {
+        setModalContent("Car ID is not valid!");
+        setOpen(true);
+      } else {
+        setSelectedCarData(carData);
+      }
+    }
+  }, [setModalContent, setOpen, setSelectedCarData, carId, cars]);
+
+  const gotoBack = useCallback(() => {
     if (date && time && hours) {
       history.push(`/car-select?date=${date}&time=${time}&hours=${hours}`);
     }
-  };
+  }, [date, time, hours, history]);
 
-  const confirmReservation = () => {
+  const confirmReservation = useCallback(() => {
     if (!hours || hours < MIN_RESERVATION_HOUR) {
-      setModalContent(`Reservation hour should at least ${MIN_RESERVATION_HOUR}.`);
+      setModalContent(`Reservation should be at least ${MIN_RESERVATION_HOUR} hours.`);
       setOpen(true);
       setHours(MIN_RESERVATION_HOUR);
-      setTotalCost(selectedCarData.rate * MIN_RESERVATION_HOUR);
-      reservation({ startDate, endDate, carId, userId, hours })
-        .then((status) => {
-          setActionChanged(!actionChanged);
-          // eslint-disable-next-line handle-callback-err
-        })
-        .catch((error) => {});
       return;
     }
+
+    setLoading(true);
+    const time = moment(time);
+    const startDate = moment(date)
+      .set({
+        hours: time.hours,
+        minutes: time.minutes,
+      })
+      .tz("America/Los_Angeles")
+      .toISOString();
+    const endDate = moment(startDate)
+      .add(hours, "hours")
+      .toISOString();
+    confirmAvailability({ startDate, endDate, carId, userId, hours })
+      .then((status) => {
+        if (status.success) {
+          history.push(`/payment-confirm?total-cost=${totalCost}`);
+        }
+        // eslint-disable-next-line handle-callback-err
+      })
+      .catch((error) => {})
+      .finally(() => {
+        setLoading(false);
+      });
     // call Confirmation API, if success, then redirect to Payment Confirmation page
-    history.push(`/payment-confirm?total-cost=${totalCost}`);
-  };
+  }, [date, time, hours, carId, userId, totalCost, confirmAvailability, setLoading, history]);
 
-  const hoursChange = (hours) => {
-    const hoursNum = parseInt(hours);
+  const hoursChange = useCallback(
+    (hours) => {
+      const num = parseInt(hours && hours !== "" ? hours : 0);
+      setHours(num);
+    },
+    [setHours],
+  );
 
-    if (hoursNum) {
-      setHours(hoursNum);
-      // calculate total cost
-      if (selectedCarData) {
-        setTotalCost(selectedCarData.rate * hoursNum);
-      }
-    }
-  };
-
-  useEffect(() => {
-    setDate(query.get("date"));
-    setTime(query.get("time"));
-    setHours(parseInt(query.get("hours")));
-    setCarId(parseInt(query.get("car-id")));
-
-    if (!query.get("date") || !query.get("time") || parseInt(query.get("hours")) < 2) {
-      setModalContent("Input params are not valid!");
-      setOpen(true);
-      return;
-    }
-
-    const carData = carArray.find((item) => item.id === parseInt(query.get("car-id")));
-    if (!carData) {
-      setModalContent("Car ID is not valid!");
-      setOpen(true);
-    } else {
-      setSelectedCarData(carData);
-      setRate(carData.rate);
-      setCarName(carData.name);
-      setTotalCost(carData.rate * parseInt(query.get("hours")));
-    }
-  }, []);
+  if (!selectedCarData) return null;
 
   return (
     <div className="flex justify-center items-center w-full py-4 flex-col min-h-screen bg-black">
@@ -99,7 +112,7 @@ function ReservationConfirm() {
         <div className="flex flex-col text-white text-xl md:text-3xl width-fit-content">
           <div className="flex flex-row mb-4">
             <span className="mr-3">Car:</span>
-            <div>{carName}</div>
+            <div>{selectedCarData.name}</div>
           </div>
 
           <div className="flex flex-row mb-4">
@@ -108,13 +121,23 @@ function ReservationConfirm() {
           </div>
 
           <div className="flex flex-row mb-4">
+            <span className="mr-3">Time:</span>
+            <span className="">{time}</span>
+          </div>
+
+          <div className="flex flex-row mb-4">
             <span className="mr-3">Hourly Cost:</span>
-            <span className="">${rate}</span>
+            <span className="">${selectedCarData.rate}</span>
           </div>
 
           <div className="flex flex-row mb-4 items-center">
             <span className="mr-3">Total Hours:</span>
-            <Input className="semantic-ui-input w-32" value={hours} onChange={(e) => hoursChange(e.target.value)} />
+            <Input
+              className="semantic-ui-input w-32"
+              min={2}
+              value={hours}
+              onChange={(e) => hoursChange(e.target.value)}
+            />
           </div>
 
           <div className="flex flex-row">
@@ -126,14 +149,15 @@ function ReservationConfirm() {
         <div className="mt-10 flex justify-center">
           <button
             className="border rounded-lg px-3 py-2 text-white font-inter bg-black w-32 font-bold capitalize mr-5"
-            onClick={() => gotoBack()}
+            onClick={gotoBack}
           >
             Back
           </button>
 
           <button
             className="border rounded-lg px-3 py-2 text-white font-inter bg-black w-32 font-bold capitalize"
-            onClick={() => confirmReservation()}
+            onClick={confirmReservation}
+            disabled={loading}
           >
             Confirm
           </button>

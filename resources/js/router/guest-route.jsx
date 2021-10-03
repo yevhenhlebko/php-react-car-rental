@@ -7,7 +7,7 @@ import useDocumentTitle from "../components/document-title";
 function GuestRoute({ component: Component, title, ...rest }) {
   useDocumentTitle(title);
 
-  const { authenticated, isInitialized, isAdmin } = useAuth();
+  const { authenticated, isInitialized, isVerified, isAdmin } = useAuth();
 
   if (!isInitialized) return null;
 
@@ -18,12 +18,11 @@ function GuestRoute({ component: Component, title, ...rest }) {
         if (authenticated) {
           if (isAdmin) {
             return <Redirect to={{ pathname: "/slot-management", state: { from: props.location } }} />;
-          } else {
+          } else if (isVerified) {
             return <Redirect to={{ pathname: "/date-select", state: { from: props.location } }} />;
           }
-        } else {
-          return <Component {...props} />;
         }
+        return <Component {...props} />;
       }}
     />
   );

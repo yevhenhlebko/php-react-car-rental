@@ -36,9 +36,9 @@ Route::name('api.')->namespace('Api')->group(function () {
 
         });
 
-        Route::get('reservation', 'Reservation@confirmReservation')->name('confirmReservation');
+        Route::get('cars', 'CarsController@getAll')->name('getAll');
         Route::get('disabled-cars', 'AvailabilityController@getDisabledCars')->name('getDisabledCars');
-        Route::get('confirm-reservation', 'AvailabilityController@confirmReservation')->name('confirmReservation');
+        Route::post('confirm-reservation', 'AvailabilityController@confirmReservation')->name('confirmReservation');
 
     });
 });

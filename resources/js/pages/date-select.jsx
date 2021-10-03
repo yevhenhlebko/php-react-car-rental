@@ -42,11 +42,11 @@ function DateSelect() {
     } else {
       // Show Validation Alert
       if (hours < MIN_RESERVATION_HOUR) {
-        setModalContent(`Hours should be at least ${MIN_RESERVATION_HOUR}.`);
+        setModalContent(`Reservation should be at least ${MIN_RESERVATION_HOUR} hours.`);
         setOpen(true);
         setHours(MIN_RESERVATION_HOUR);
       } else {
-        setModalContent("Please check all fields if valid.");
+        setModalContent("Please make sure all fields are valid.");
         setOpen(true);
       }
     }

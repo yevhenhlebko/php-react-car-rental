@@ -10,7 +10,7 @@ import GuestNav from "../../components/guest-nav";
 
 function Join() {
   const history = useHistory();
-  const { setCurrentUser, setToken } = useAuth();
+  const { register } = useAuth();
   const email = useInputValue("email");
   const name = useInputValue("name");
   const password = useInputValue("password");
@@ -25,17 +25,7 @@ function Join() {
       password_confirmation: password.value,
       go_code: gocode.value,
     })
-      .then(({ user, token }) => {
-        if (user.gocode) {
-          setCurrentUser(user);
-          setToken(token);
-          history.push("/date-select");
-        } else {
-          setCurrentUser(user);
-          setToken(token);
-          history.push("/date-select");
-        }
-      })
+      .then((url) => {})
       .catch((error) => {
         error.json().then(({ errors }) => {
           [email, name, password].forEach(({ parseServerError }) => parseServerError(errors));
@@ -62,6 +52,23 @@ function Join() {
                 </label>
               </div>
             </div>
+
+            <div className="mb-4">
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="name"
+                className={`bg-black text-white appearance-none border-b-2 md:border-b-2 border-gray-200 border-opacity-25 font-inter rounded w-full py-1 px-3   ${
+                  name.error ? "border-red-500" : ""
+                }`}
+                required
+                {...name.bind}
+              />
+              <BiLockAlt className="text-white fa-icon inline" />
+              {name.error && <p className="text-red-500 text-xs pt-2">{pasnamesword.error}</p>}
+            </div>
+
             <div className="w-full bg-black mb-4">
               <input
                 id="email"

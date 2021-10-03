@@ -3,6 +3,7 @@ import { NavLink, Link, useHistory } from "react-router-dom";
 import { useAuth } from "../context/auth";
 
 function AuthNav() {
+  const history = useHistory();
   const { logout, isAdmin } = useAuth();
   const [hideMobileNav, setHideMobileNav] = useState(true);
 
@@ -11,6 +12,7 @@ function AuthNav() {
 
   const handleLogout = () => {
     logout();
+    history.push("/login");
   };
 
   return (
@@ -33,7 +35,7 @@ function AuthNav() {
         )}
 
         <li onClick={handleLogout} className="px-4 py-2">
-          <Link to="/logout" className="no-underline text-white font-julius font-normal text-opacity-75">
+          <Link to="#" className="no-underline text-white font-julius font-normal text-opacity-75">
             Logout
           </Link>
         </li>

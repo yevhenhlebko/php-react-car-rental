@@ -26,6 +26,10 @@ function AdminRoute({ component: Component, title, ...rest }) {
         //   setIntendedUrl(props.location.pathname);
         //   return null;
         // } else {
+        if (!isInitialized) {
+          return null;
+        }
+
         if (authenticated) {
           if (isAdmin) {
             return (
