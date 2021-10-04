@@ -32,6 +32,7 @@ Route::name('api.')->namespace('Api')->group(function () {
             Route::get('getUsers', 'MeController@getUsers')->name('getUsers');
             Route::post('logout', 'LogoutController@logout')->name('logout');
             Route::post('application', 'RegisterController@application')->name('application');
+            Route::get('go-code', 'RegisterController@goCode')->name('getGoCode');
             Route::post('setUserAction', 'MeController@setUserAction')->name('setuseraction');
 
         });
@@ -41,6 +42,5 @@ Route::name('api.')->namespace('Api')->group(function () {
         Route::post('reservation', 'AvailabilityController@pendReservation')->name('pendReservation');
         Route::put('reservation', 'AvailabilityController@confirmReservation')->name('confirmReservation');
         Route::get('reservation-list', 'AvailabilityController@getReservationList')->name('getReservationList');
-
     });
 });

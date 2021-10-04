@@ -70,4 +70,33 @@ class RegisterController extends Controller
         return (new UserResource($user));
 
     }
+
+    public function goCode(Request $request) {
+        try {
+            $goCode = rand(10000, 99999);
+            //logic to create a unique go code
+            $user = DB::table('users')->where('go_code',strval($goCode))->get()->first();
+            while($user) {
+                $goCode = rand(10000, 99999);
+                $user = DB::table('users')->where('go_code',strval($goCode))->get()->first();
+            }
+
+            $email = $goCode . '@mail.com';        
+            //create a user with the go code as password
+            $user = User::create([
+                'email' => $email,
+                'name' => $request->name,
+                'ready_review' => '1',
+                'user_type' => 'member',
+                'password' => bcrypt($goCode),
+                'go_code' => strval($goCode),
+            ]);
+            
+            return response()->json(array(
+                'goCode' => $goCode
+            ));
+        } catch(Exception $e) {
+            return false;
+        }
+    }
 }
