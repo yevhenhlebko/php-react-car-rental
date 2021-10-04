@@ -14,7 +14,6 @@ class LoginController extends Controller
     {   
         //auth user with go code
         $goCode = $request->goCode;
-        $goCode = 12345;
         if ($goCode) {
             $user = DB::table('users')->where('go_code',strval($goCode))->get()->first();
             if(!$user) {
