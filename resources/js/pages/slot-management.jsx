@@ -63,14 +63,10 @@ function SlotManagement() {
                         <td className="px-3">{reservation.name}</td>
                         <td className="px-3">{reservation.carName}</td>
                         <td className="px-3">
-                          {moment(reservation.reserved_date_time)
-                            .tz("America/Los_Angeles")
-                            .format("MM/DD/YYYY hh:mm A")}
+                          {moment.utc(reservation.reserved_date_time,).tz("America/Los_Angeles").format("MM/DD/YYYY hh:mm A")}
                         </td>
                         <td className="px-3">
-                          {moment(reservation.due_date_time)
-                            .tz("America/Los_Angeles")
-                            .format("MM/DD/YYYY hh:mm A")}
+                          {moment.utc(reservation.due_date_time,).tz("America/Los_Angeles").format("MM/DD/YYYY hh:mm A")}
                         </td>
                         <td className="px-3">
                           {reservation.status == 0 ? "Pending" : reservation.status == 1 ? "Accepted" : "Rejected"}
