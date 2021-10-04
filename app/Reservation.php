@@ -18,7 +18,8 @@ class Reservation extends Model
         'enable'
     ];
 
-    public function getDisabledCars($startDate, $endDate) {
+    public function getDisabledCars($startDate, $endDate)
+    {
         $reservations = Reservation::whereDate('reserved_date_time', '<=', \DateTime::createFromFormat('Y-m-d H:i', $endDate))
             ->whereDate('due_date_time', '>=', \DateTime::createFromFormat('Y-m-d H:i', $startDate))
             ->get();
@@ -28,7 +29,8 @@ class Reservation extends Model
         return $carIds;
     }
 
-    public function confirmReservation($startDate, $endDate, $carId, $userId, $hours) {
+    public function confirmReservation($startDate, $endDate, $carId, $userId, $hours)
+    {
         try {
             $reservations = Reservation::whereDate('reserved_date_time', '<=', \DateTime::createFromFormat('Y-m-d H:i', $endDate))
                 ->whereDate('due_date_time', '>=', \DateTime::createFromFormat('Y-m-d H:i', $startDate))
@@ -54,6 +56,26 @@ class Reservation extends Model
                 return true;
             }
         } catch(Exception $e) {
+            return false;
+        }
+    }
+
+    public function acceptReservation($id)
+    {
+        try {
+            $res = Reservation::where('id', $id)->update(['status' => 'accepted']);
+            return $res;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function declineReservation($id)
+    {
+        try {
+            $res = Reservation::where('id', $id)->delete();
+            return $res;
+        } catch (Exception $e) {
             return false;
         }
     }
