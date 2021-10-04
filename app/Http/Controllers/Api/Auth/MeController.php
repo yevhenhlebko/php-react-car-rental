@@ -16,7 +16,7 @@ class MeController extends Controller
 
     public function getUsers(Request $request)
     {
-        $users = DB::table('users')->where('user_type','member')->get();
+        $users = DB::table('users')->where('user_type','member')->orderBy('id', 'DESC')->get();
         return response()->json($users);
     }
 

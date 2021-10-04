@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 import { getToken, setToken, getIntendedUrl } from "../utils/auth";
-import { getUser, login as loginAPI, register as registerAPI } from "../api/auth";
+import {
+  getUser,
+  login as loginAPI,
+  register as registerAPI,
+  registerGoCodeUser as registerGoCodeUserAPI,
+} from "../api/auth";
 import { useHistory } from "react-router-dom";
 
 const AuthContext = React.createContext();
@@ -35,8 +40,8 @@ function AuthProvider({ children }) {
   }, [setIsInitialized, setIsAdmin, setIsVerified, setCurrentUser, initAuth]);
 
   const register = useCallback(
-    ({ name, email, password, password_confirmation, go_code }) => {
-      return registerAPI({ name, email, password, password_confirmation, go_code })
+    ({ name, email, password, password_confirmation }) => {
+      return registerAPI({ name, email, password, password_confirmation })
         .then(({ user, token }) => {
           if (user != null) {
             setIsAdmin(user.user_type == "Administrator");
@@ -54,11 +59,28 @@ function AuthProvider({ children }) {
     },
     [registerAPI, setCurrentUser, setIsAdmin, setIsVerified, setToken],
   );
+
+  const registerGoCodeUser = useCallback(
+    ({ name, go_code }) => {
+      return registerGoCodeUserAPI({ name, go_code })
+        .then(() => {
+          // register success
+          //return getIntendedUrl(user.user_type == "Administrator");
+        })
+        .catch((error) => {
+          console.error(error);
+          throw error;
+        });
+    },
+    [registerAPI, setCurrentUser, setIsAdmin, setIsVerified, setToken],
+  );
+
   const login = useCallback(
-    ({ email, password }) => {
+    ({ email, password, goCode }) => {
       return loginAPI({
         email,
         password,
+        goCode,
       })
         .then(({ user, token }) => {
           if (user != null) {
@@ -98,6 +120,7 @@ function AuthProvider({ children }) {
         currentUser,
         isInitialized,
         register,
+        registerGoCodeUser,
         login,
         logout,
         setToken,

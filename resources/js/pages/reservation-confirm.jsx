@@ -22,6 +22,7 @@ function ReservationConfirm() {
   const [totalCost, setTotalCost] = useState(0);
   const [selectedCarData, setSelectedCarData] = useState();
 
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [modalContent, setModalContent] = useState();
@@ -57,6 +58,8 @@ function ReservationConfirm() {
   }, [date, time, hours, history]);
 
   const handleConfirmReservation = useCallback(() => {
+    setError(false);
+
     if (!hours || hours < MIN_RESERVATION_HOUR) {
       setModalContent(`Reservation should be at least ${MIN_RESERVATION_HOUR} hours.`);
       setOpen(true);
@@ -75,6 +78,8 @@ function ReservationConfirm() {
       .then((response) => {
         if (response.reservation && response.reservation.user_id) {
           history.push(`/payment-confirm?total-cost=${totalCost}`);
+        } else {
+          setError(true);
         }
         // eslint-disable-next-line handle-callback-err
       })
@@ -83,7 +88,7 @@ function ReservationConfirm() {
         setLoading(false);
       });
     // call Confirmation API, if success, then redirect to Payment Confirmation page
-  }, [date, time, hours, carId, userId, totalCost, createReservation, setLoading, history]);
+  }, [date, time, hours, carId, userId, totalCost, createReservation, setLoading, setError, history]);
 
   const hoursChange = useCallback(
     (hours) => {
@@ -140,6 +145,8 @@ function ReservationConfirm() {
             <span className="">${totalCost}</span>
           </div>
         </div>
+
+        {error && <p className="text-red-500 text-xs pt-2">Times selected are not available.</p>}
 
         <div className="mt-10 flex justify-center">
           <button

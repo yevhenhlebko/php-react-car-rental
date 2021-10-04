@@ -33,7 +33,15 @@ function UserApproval() {
         </div>
       </div>
 
-      <div className="mt-72 lg:mt-2 xl:mt-2 box-border overflow-hidden text-2xl form-box-shadow mix-blend-normal rounded-3xl border-grey-light w-3/4 sm:w-1/2 lg:w-3/5 xl:w-3/5 px-8 py-4 bg-black">
+      <div className="mt-72 lg:mt-2 xl:mt-2 box-border overflow-hidden text-xl form-box-shadow mix-blend-normal rounded-3xl border-grey-light w-3/4 sm:w-1/2 lg:w-3/5 xl:w-3/5 px-8 py-4 bg-black">
+        <div className="mb-10 mt-4 text-right">
+          <Link
+            to="/create-user"
+            className="border right rounded-2xl px-3 py-2 text-white font-inter bg-black w-30 font-bold inline-block"
+          >
+            Create GoCode User
+          </Link>
+        </div>
         <div className="overflow-auto mb-4 mt-4">
           <div className="card-body bg-black text-white appearance-none  font-inter rounded w-full py-1 px-3">
             <table>
@@ -42,28 +50,32 @@ function UserApproval() {
                   <th>ID</th>
                   <th className="w-1/5">Name</th>
                   <th className="w-2/5">Email</th>
+                  <th className="w-1/5">Go Code</th>
                   <th>Status</th>
                   <th className="w-1/5">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {currentUsers
-                  ? currentUsers.map((user, index) => (
-                      <tr key={index} className="w-full text-center">
-                        <td>{user.id}</td>
-                        <td className="w-1/5">{user.name}</td>
-                        <td>{user.email}</td>
-                        <td>{user.ready_review == "1" ? "Accepted" : "Rejected"}</td>
-                        <td>
-                          <div className="flex">
-                            <p className="flex flex-col px-4 py-4 m-auto" onClick={() => userAction("accept", user.id)}>
-                              <Link
-                                to="#"
-                                className="border rounded-2xl px-3 py-2 text-white font-inter bg-black w-30 font-bold"
-                              >
-                                Accept
-                              </Link>
-                            </p>
+                {currentUsers ? (
+                  currentUsers.map((user, index) => (
+                    <tr key={index} className="w-full text-center">
+                      <td className="px-3">{user.id}</td>
+                      <td className="w-1/5 px-3">{user.name}</td>
+                      <td className="px-3">{user.email}</td>
+                      <td className="px-3">{user.go_code}</td>
+                      <td className="px-3">{user.ready_review == "1" ? "Accepted" : "Rejected"}</td>
+                      <td className="px-3">
+                        <div className="flex">
+                          <p className="flex flex-col px-4 py-4 m-auto" onClick={() => userAction("accept", user.id)}>
+                            <Link
+                              to="#"
+                              className="border rounded-2xl px-3 py-2 text-white font-inter bg-black w-30 font-bold"
+                            >
+                              Accept
+                            </Link>
+                          </p>
+
+                          {!user.go_code && (
                             <p className="flex flex-col px-4 py-4 m-auto" onClick={() => userAction("reject", user.id)}>
                               <Link
                                 to="#"
@@ -72,19 +84,23 @@ function UserApproval() {
                                 Reject
                               </Link>
                             </p>
-                            <p className="flex flex-col px-4 py-4 m-auto" onClick={() => userAction("delete", user.id)}>
-                              <Link
-                                to="#"
-                                className="border rounded-2xl px-3 py-2 text-white font-inter bg-black w-30 font-bold"
-                              >
-                                Delete
-                              </Link>
-                            </p>
-                          </div>
-                        </td>
-                      </tr>
-                    ))
-                  : "Loading..."}
+                          )}
+
+                          <p className="flex flex-col px-4 py-4 m-auto" onClick={() => userAction("delete", user.id)}>
+                            <Link
+                              to="#"
+                              className="border rounded-2xl px-3 py-2 text-white font-inter bg-black w-30 font-bold"
+                            >
+                              Delete
+                            </Link>
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <p className="text-center">Loading...</p>
+                )}
               </tbody>
             </table>
           </div>

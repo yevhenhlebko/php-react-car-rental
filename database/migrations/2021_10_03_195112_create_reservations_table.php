@@ -23,7 +23,7 @@ class CreateReservationsTable extends Migration
             $table->dateTime('due_date_time');
             $table->integer('total_hour');
             $table->integer('total_cost');
-            $table->boolean('enable');
+            $table->integer('status');
             $table->timestamps();
         });
     }

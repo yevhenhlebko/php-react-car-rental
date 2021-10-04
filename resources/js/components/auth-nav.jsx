@@ -27,11 +27,18 @@ function AuthNav() {
 
       <ul className="list-reset flex pt-4">
         {isAdmin && (
-          <li className="px-4 py-2">
-            <Link to="/user-approve" className="no-underline text-white font-julius font-normal text-opacity-75">
-              UserList
-            </Link>
-          </li>
+          <>
+            <li className="px-4 py-2">
+              <Link to="/slot-management" className="no-underline text-white font-julius font-normal text-opacity-75">
+                Reservations
+              </Link>
+            </li>
+            <li className="px-4 py-2">
+              <Link to="/user-approve" className="no-underline text-white font-julius font-normal text-opacity-75">
+                Users
+              </Link>
+            </li>
+          </>
         )}
 
         <li onClick={handleLogout} className="px-4 py-2">

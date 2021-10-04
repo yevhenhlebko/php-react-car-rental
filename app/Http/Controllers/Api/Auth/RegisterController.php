@@ -81,7 +81,7 @@ class RegisterController extends Controller
                 $user = DB::table('users')->where('go_code',strval($goCode))->get()->first();
             }
 
-            $email = $goCode . '@mail.com';        
+            $email = $goCode . '@ajsexperience.com';
             //create a user with the go code as password
             $user = User::create([
                 'email' => $email,
@@ -91,7 +91,7 @@ class RegisterController extends Controller
                 'password' => bcrypt($goCode),
                 'go_code' => strval($goCode),
             ]);
-            
+
             return response()->json(array(
                 'goCode' => $goCode
             ));

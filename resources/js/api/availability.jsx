@@ -9,3 +9,18 @@ export const createReservation = ({ startDate, endDate, carId, userId, hours }) 
   client(`/api/reservation`, { method: "POST", body: { startDate, endDate, carId, userId, hours } })
     .then((data) => data)
     .catch(() => null);
+
+export const confirmReservation = ({ id }) =>
+  client(`/api/reservation`, { method: "PUT", body: { id } })
+    .then((data) => data)
+    .catch(() => null);
+
+export const rejectReservation = ({ id }) =>
+  client(`/api/reservation/reject`, { method: "PUT", body: { id } })
+    .then((data) => data)
+    .catch(() => null);
+
+export const getReservations = () =>
+  client(`/api/reservation-list`)
+    .then((data) => data)
+    .catch(() => null);

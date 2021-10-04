@@ -11,7 +11,7 @@ class LoginController extends Controller
 {
 
     public function __invoke(Request $request)
-    {   
+    {
         //auth user with go code
         $goCode = $request->goCode;
         if ($goCode) {
@@ -21,9 +21,9 @@ class LoginController extends Controller
                     'errors' => [
                         'goCode' => ['invalid go code.']
                     ]
-                ], 422); 
+                ], 422);
             } else {
-                $email = strval($goCode) . '@mail.com';
+                $email = strval($goCode) . '@ajsexperience.com';
                 $token = auth()->attempt(array('email' =>  $email,'password' => strval($goCode)));
                 error_log($token);
                 if (!$token) {
@@ -42,7 +42,7 @@ class LoginController extends Controller
                 ]);
             }
         }
-       
+
         $this->validate($request, [
             'email' => 'required',
             'password' => 'required',

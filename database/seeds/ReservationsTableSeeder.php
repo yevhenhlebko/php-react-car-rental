@@ -20,7 +20,7 @@ class ReservationsTableSeeder extends Seeder
             'due_date_time' => Carbon::create(2021, 10, 01, 18, 30, 0, 'GMT')->toDateTimeString(),
             'total_hour' => 8,
             'total_cost' => 800,
-            'enable' => true,
+            'status' => 0,
         ]);
         DB::table('reservations')->insert([
             'car_id' => $this->getRandomCarId(),
@@ -29,7 +29,7 @@ class ReservationsTableSeeder extends Seeder
             'due_date_time' => Carbon::create(2021, 10, 03, 8, 0, 0, 'GMT')->toDateTimeString(),
             'total_hour' => 5,
             'total_cost' => 750,
-            'enable' => true,
+            'status' => 0,
         ]);
         DB::table('reservations')->insert([
             'car_id' => $this->getRandomCarId(),
@@ -38,7 +38,7 @@ class ReservationsTableSeeder extends Seeder
             'due_date_time' => Carbon::create(2021, 10, 05, 19, 15, 0, 'GMT')->toDateTimeString(),
             'total_hour' => 10,
             'total_cost' => 1900,
-            'enable' => true,
+            'status' => 0,
         ]);
     }
 

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Car;
+use App\User;
 use Carbon\Carbon;
 
 class Reservation extends Model
@@ -16,7 +17,7 @@ class Reservation extends Model
         'due_date_time',
         'total_hour',
         'total_cost',
-        'enable'
+        'status'
     ];
 
     public function getDisabledCars($startDate, $endDate) {
@@ -25,21 +26,22 @@ class Reservation extends Model
             $eDate = Carbon::create($endDate)->toDateString();
             $sTime = Carbon::create($startDate)->toTimeString();
             $eTime = Carbon::create($endDate)->toTimeString();
-            $reservations = Reservation::orWhere(function($query) use ($sDate, $sTime) {
+            $reservations = Reservation::where('status', '!=', 2)
+                ->where(function($query) use ($sDate, $sTime) {
                     $query->whereDate('reserved_date_time', '=', $sDate)
-                        ->whereTime('reserved_date_time', '>', $sTime);
+                        ->orWhereTime('reserved_date_time', '>', $sTime);
                 })
-                ->orWhere(function($query) use ($eDate, $eTime)  {
+                ->where(function($query) use ($eDate, $eTime)  {
                     $query->whereDate('due_date_time', '=', $eDate)
-                        ->whereTime('due_date_time', '<', $eTime);
+                        ->orWhereTime('due_date_time', '<', $eTime);
                 })
-                ->orWhere(function($query) use ($sDate) {
+                ->where(function($query) use ($sDate) {
                     $query->whereDate('reserved_date_time', '>=', $sDate)
-                        ->whereDate('due_date_time', '<=', $sDate);
+                        ->orWhereDate('due_date_time', '<=', $sDate);
                 })
-                ->orWhere(function($query) use ($eDate) {
+                ->where(function($query) use ($eDate) {
                     $query->whereDate('reserved_date_time', '>=', $eDate)
-                        ->whereDate('due_date_time', '<=', $eDate);
+                        ->orWhereDate('due_date_time', '<=', $eDate);
                 })
                 ->get();
 
@@ -55,7 +57,18 @@ class Reservation extends Model
     public function confirmReservation($id) {
         try {
             $reservations = Reservation::find($id);
-            $reservations->enable = true;
+            $reservations->status = 1;
+            $reservations->save();
+            return $reservations;
+        } catch(Exception $e) {
+            return false;
+        }
+    }
+
+    public function rejectReservation($id) {
+        try {
+            $reservations = Reservation::find($id);
+            $reservations->status = 2;
             $reservations->save();
             return $reservations;
         } catch(Exception $e) {
@@ -86,7 +99,7 @@ class Reservation extends Model
                     'due_date_time' => Carbon::create($endDate)->toDateTimeString(),
                     'total_hour' => $hours,
                     'total_cost' => $hours * $car->rate,
-                    'enable' => false
+                    'status' => 0
                 ]);
 
                 return $reservations;
@@ -98,7 +111,11 @@ class Reservation extends Model
 
     public function getReservationList(){
         try{
-            $reservations = Reservation::where('enable', false)->get();
+            $reservations = Reservation::where('status', 0)->orWhere('status', 1)
+                ->leftJoin('users', 'reservations.user_id', '=', 'users.id')
+                ->rightJoin('cars', 'reservations.car_id', '=', 'cars.id')
+                ->select('cars.name as carName','users.name', 'reservations.*')
+                ->get();
             return $reservations;
         } catch(Exception $e) {
             return false;

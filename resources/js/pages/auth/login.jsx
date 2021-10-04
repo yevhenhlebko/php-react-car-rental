@@ -12,16 +12,20 @@ function Login() {
   const { login } = useAuth();
   const email = useInputValue("email");
   const password = useInputValue("password");
+  const goCode = useInputValue("goCode");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     login({
       email: email.value,
       password: password.value,
+      goCode: email.value && password.value ? undefined : goCode.value,
     })
-      .then((url) => {})
-      .catch((e) => {
-        e.json().then(({ errors }) => email.parseServerError(errors));
+      .then(() => {})
+      .catch((error) => {
+        error.json().then(({ errors }) => {
+          [email, goCode].forEach(({ parseServerError }) => parseServerError(errors));
+        });
       });
   };
 
@@ -52,7 +56,7 @@ function Login() {
                   className={`bg-black text-white appearance-none border-b-2 md:border-b-2 border-gray-200 border-opacity-25 font-inter rounded w-full py-1 px-3${
                     email.error ? "border-red-500" : ""
                   }`}
-                  required
+                  required={!goCode || goCode === ""}
                   autoFocus
                   {...email.bind}
                 />
@@ -70,10 +74,25 @@ function Login() {
                 className={`bg-black text-white appearance-none border-b-2 border-gray-200 border-opacity-25 rounded w-full py-1 px-3${
                   email.error ? "border-red-500" : ""
                 }`}
-                required
+                required={!goCode || goCode === ""}
                 {...password.bind}
               />
               <BiLockAlt className="text-white fa-icon inline" />
+            </div>
+
+            <div className="mb-4">
+              <input
+                type="text"
+                id="goCode"
+                name="goCode"
+                placeholder="go code (optional)"
+                className={`bg-black text-white appearance-none border-b-2 md:border-b-2 border-gray-200 border-opacity-25 font-inter rounded w-full py-1 px-3   ${
+                  goCode.error ? "border-red-500" : ""
+                }`}
+                {...goCode.bind}
+              />
+              <BiLockAlt className="text-white fa-icon inline" />
+              {goCode.error && <p className="text-red-500 text-xs pt-2">{goCode.error}</p>}
             </div>
 
             <div className="mb-3 flex justify-end">

@@ -23,6 +23,13 @@ class AvailabilityController extends Controller
             'reservation' => $result,
         ));
     }
+    public function rejectReservation(Request $request) {
+        $reservationDb = new Reservation();
+        $result = $reservationDb->rejectReservation($request->id);
+        return response()->json(array(
+            'reservation' => $result,
+        ));
+    }
 
     public function pendReservation(Request $request) {
         $reservationDb = new Reservation();
@@ -36,7 +43,7 @@ class AvailabilityController extends Controller
         $reservationDb = new Reservation();
         $result = $reservationDb->getReservationList();
         return response()->json(array(
-            'reservation' => $result,
+            'reservations' => $result,
         ));
     }
 }
