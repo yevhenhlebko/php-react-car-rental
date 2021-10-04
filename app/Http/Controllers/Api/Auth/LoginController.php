@@ -11,7 +11,39 @@ class LoginController extends Controller
 {
 
     public function __invoke(Request $request)
-    {
+    {   
+        //auth user with go code
+        $goCode = $request->goCode;
+        if ($goCode) {
+            $user = DB::table('users')->where('go_code',strval($goCode))->get()->first();
+            if(!$user) {
+                return response()->json([
+                    'errors' => [
+                        'email' => ['invalid go code.']
+                    ]
+                ], 422); 
+            } else {
+                //To Do: contruct a valid token here
+                $email = strval($goCode) . '@mail.com';
+                $token = auth()->attempt(array('email' =>  $email,'password' => strval($goCode)));
+                error_log($token);
+                if (!$token) {
+                    return response()->json([
+                        'errors' => [
+                            'email' => ['Sorry we couldn\'t sign you in with those details.']
+                        ]
+                    ], 422);
+                }
+                $user = DB::table('users')->where('go_code',strval($goCode))->get()->first();
+                return (new UserResource($user))
+                ->additional([
+                    'meta' => [
+                        'token' => $token
+                    ]
+                ]);
+            }
+        }
+       
         $this->validate($request, [
             'email' => 'required',
             'password' => 'required',
