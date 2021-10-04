@@ -43,9 +43,9 @@ function SlotManagement() {
 
       <div className="mt-3 xl:mt-2 box-border overflow-hidden text-xl form-box-shadow mix-blend-normal rounded-3xl border-grey-light w-3/4 sm:w-5/6 lg:w-11/12 xl:w-4/5 px-8 py-4 bg-black">
         <div className="overflow-auto lg:overflow-visible mb-4 mt-4">
-          <div className="card-body bg-black text-white appearance-none  font-inter rounded w-full py-1 px-3">
+          <div className="card-body w-full bg-black text-white appearance-none  font-inter rounded py-1 px-3">
             {reservations && reservations.length > 0 && (
-              <table>
+              <table className="w-full">
                 <thead>
                   <tr className="w-full text-center">
                     <th>Name</th>
