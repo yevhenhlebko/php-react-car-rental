@@ -9,7 +9,7 @@ function Welcome() {
       <div className="bg-black flex flex-1 flex-col items-center justify-center">
         <div className="p-8 flex flex-col items-center">
           <div className="ajs-header text-center text-6xl leading-loose text-white font-bungee font-bold">
-            AJ’s Experience
+            <img src="/images/icons/ajexperience.svg" />
           </div>
         </div>
         <div className="mt-72 items-center">
