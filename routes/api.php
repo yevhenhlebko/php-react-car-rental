@@ -32,7 +32,6 @@ Route::name('api.')->namespace('Api')->group(function () {
             Route::get('getUsers', 'MeController@getUsers')->name('getUsers');
             Route::post('logout', 'LogoutController@logout')->name('logout');
             Route::post('application', 'RegisterController@application')->name('application');
-            Route::post('go-code', 'RegisterController@goCode')->name('getGoCode');
             Route::post('setUserAction', 'MeController@setUserAction')->name('setuseraction');
 
         });
@@ -43,5 +42,9 @@ Route::name('api.')->namespace('Api')->group(function () {
         Route::put('reservation', 'AvailabilityController@confirmReservation')->name('confirmReservation');
         Route::put('reservation/reject', 'AvailabilityController@rejectReservation')->name('rejectReservation');
         Route::get('reservation-list', 'AvailabilityController@getReservationList')->name('getReservationList');
+
+        Route::post('go-code', 'GoCodeController@store')->name('createGoCode');
+        Route::get('go-code-list','GoCodeController@index')->name('getGoCodeList');
+        Route::put('go-code', 'GoCodeController@edit')->name('updateGoCode');
     });
 });
