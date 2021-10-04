@@ -16,7 +16,7 @@ function AuthNav() {
   };
 
   return (
-    <div className="w-full bg-black px-6 mx-auto flex items-center justify-between border-b-2 border-gray-200 border-opacity-25">
+    <div className="w-full bg-black px-2 sm:px-6 mx-auto flex items-center justify-between border-b-2 border-gray-200 border-opacity-25">
       <ul className="list-reset flex pt-4">
         <li className="px-2">
           <Link to="" className="no-underline text-white font-julius font-normal text-opacity-75">
