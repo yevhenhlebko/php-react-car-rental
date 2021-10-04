@@ -28,12 +28,12 @@ function UserApproval() {
   return (
     <div className="flex justify-center items-center w-full flex-col py-4 min-h-screen bg-black">
       <div className="p-8 flex flex-col items-center">
-        <div className="ajs-header text-center text-6xl leading-loose text-white font-bungee font-bold">
+        <div className="ajs-header text-center text-4xl sm:text-6xl leading-loose text-white font-bungee font-bold">
           AJ’s Experience
         </div>
       </div>
 
-      <div className="mt-72 lg:mt-2 xl:mt-2 box-border overflow-hidden text-xl form-box-shadow mix-blend-normal rounded-3xl border-grey-light w-3/4 sm:w-1/2 lg:w-3/5 xl:w-3/5 px-8 py-4 bg-black">
+      <div className="mt-3 box-border overflow-hidden text-xl form-box-shadow mix-blend-normal rounded-3xl border-grey-light w-3/4 sm:w-5/6 lg:w-11/12 xl:w-4/5 px-8 py-4 bg-black">
         <div className="mb-10 mt-4 text-right">
           <Link
             to="/create-user"
@@ -42,7 +42,7 @@ function UserApproval() {
             Create GoCode User
           </Link>
         </div>
-        <div className="overflow-auto mb-4 mt-4">
+        <div className="overflow-auto lg:overflow-visible mb-4 mt-4">
           <div className="card-body bg-black text-white appearance-none  font-inter rounded w-full py-1 px-3">
             <table>
               <thead>
