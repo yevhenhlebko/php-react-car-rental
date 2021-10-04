@@ -33,7 +33,6 @@ Route::name('api.')->namespace('Api')->group(function () {
             Route::post('logout', 'LogoutController@logout')->name('logout');
             Route::post('application', 'RegisterController@application')->name('application');
             Route::post('setUserAction', 'MeController@setUserAction')->name('setuseraction');
-
         });
 
         Route::get('cars', 'CarsController@getAll')->name('getAll');

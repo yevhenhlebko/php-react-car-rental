@@ -64,9 +64,9 @@ function DateSelect() {
 
   return (
     <div className="flex justify-center items-center w-full py-4 flex-col min-h-screen bg-black">
-      <div className="p-8 flex flex-col items-center">
+      <div className="p-10 flex flex-col items-center">
         <div className="ajs-header text-3xl md:text-6xl text-center leading-loose text-white font-bungee font-bold">
-          AJ’s Experience
+          <img src="/images/icons/ajexperience.svg" />
         </div>
       </div>
 
