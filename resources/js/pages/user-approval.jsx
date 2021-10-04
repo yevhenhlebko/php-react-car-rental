@@ -62,8 +62,10 @@ function UserApproval() {
                       <td className="px-3">{user.id}</td>
                       <td className="w-1/5 px-3">{user.name}</td>
                       <td className="px-3">{user.email}</td>
-                      <td className="px-3">{user.go_code}</td>
-                      <td className="px-3">{user.ready_review == "1" ? "Accepted" : "Rejected"}</td>
+                      <td className="px-3">{user.go_code || "-"}</td>
+                      <td className="px-3">
+                        {user.ready_review == "1" ? "Accepted" : user.ready_review == "0" ? "Pending" : "Rejected"}
+                      </td>
                       <td className="px-3">
                         <div className="flex">
                           <p className="flex flex-col px-4 py-4 m-auto" onClick={() => userAction("accept", user.id)}>
