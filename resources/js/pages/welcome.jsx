@@ -8,16 +8,16 @@ function Welcome() {
       <GuestNav />
       <div className="bg-black flex flex-1 flex-col items-center justify-center">
         <div className="p-8 flex flex-col items-center">
-          <div className="ajs-header text-center text-6xl leading-loose text-white font-bungee font-bold">
+          <div className="ajs-header text-center text-4xl sm:text-7xl leading-loose text-white font-bungee font-bold">
             AJ’s Experience
           </div>
         </div>
-        <div className="mt-72 items-center">
+        <div className="mt-10 px-7 lg:px-0 items-center">
           <img src="/images/icons/car.svg" />
         </div>
-        <div className="mt-5per w-1/6 h-96">
+        <div className="mt-28 w-2/6 sm:w-1/6">
           <Link to="/login" className="text-white">
-            <button className="border rounded-lg p-2 text-white bg-black w-full text-2xl font-julius hover:bg-indigo-500-dark">
+            <button className="border rounded-lg p-2 text-white bg-black w-full text-xl sm:text-2xl font-julius hover:bg-indigo-500-dark">
               Start
             </button>
           </Link>
