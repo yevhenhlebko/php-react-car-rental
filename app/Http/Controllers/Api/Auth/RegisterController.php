@@ -23,7 +23,7 @@ class RegisterController extends Controller
 
         $user = User::create([
             'email' => $request->email,
-            'name' => 'user',
+            'name' => $request->name,
             'ready_review' => $found ? '1' : '0',
             'go_code' => $found ? $goCode : null,
             'user_type' => 'member',
