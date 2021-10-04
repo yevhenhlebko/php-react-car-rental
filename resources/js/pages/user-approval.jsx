@@ -51,8 +51,8 @@ function UserApproval() {
   return (
     <div className="flex justify-center items-center w-full flex-col py-4 min-h-screen bg-black">
       <div className="p-8 flex flex-col items-center">
-        <div className="ajs-header text-center text-4xl sm:text-6xl leading-loose text-white font-bungee font-bold">
-          AJ’s Experience
+        <div className="ajs-header text-center text-6xl leading-loose text-white font-bungee font-bold">
+            <img src="/images/icons/ajexperience.svg" />
         </div>
       </div>
 
