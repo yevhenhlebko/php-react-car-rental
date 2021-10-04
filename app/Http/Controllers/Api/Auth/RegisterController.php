@@ -19,7 +19,7 @@ class RegisterController extends Controller
 
         $user = User::create([
             'email' => $request->email,
-            'name' => 'user',
+            'name' => $request->name,
             'ready_review' => '0',
             'user_type' => 'member',
             'password' => bcrypt($request->password),
