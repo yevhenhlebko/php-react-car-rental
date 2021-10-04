@@ -2,11 +2,11 @@ import React from "react";
 import { Modal } from "semantic-ui-react";
 
 function CustomModal(props) {
-  const { open, show, hide, content, ...rest } = props;
+  const { open, show, hide, content, header = "Error", ...rest } = props;
 
   return (
     <Modal onClose={() => hide()} onOpen={() => show()} open={open} {...rest}>
-      <Modal.Header>Error</Modal.Header>
+      <Modal.Header>{header}</Modal.Header>
 
       <Modal.Content>
         <Modal.Description>

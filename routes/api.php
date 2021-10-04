@@ -43,8 +43,7 @@ Route::name('api.')->namespace('Api')->group(function () {
         Route::put('reservation/reject', 'AvailabilityController@rejectReservation')->name('rejectReservation');
         Route::get('reservation-list', 'AvailabilityController@getReservationList')->name('getReservationList');
 
-        Route::post('go-code', 'GoCodeController@store')->name('createGoCode');
+        Route::get('go-code', 'GoCodeController@store')->name('createGoCode');
         Route::get('go-code-list','GoCodeController@index')->name('getGoCodeList');
-        Route::put('go-code', 'GoCodeController@edit')->name('updateGoCode');
     });
 });

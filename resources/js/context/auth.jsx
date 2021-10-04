@@ -5,7 +5,7 @@ import {
   getUser,
   login as loginAPI,
   register as registerAPI,
-  registerGoCodeUser as registerGoCodeUserAPI,
+  getGoCode as getGoCodeAPI,
 } from "../api/auth";
 import { useHistory } from "react-router-dom";
 
@@ -40,16 +40,16 @@ function AuthProvider({ children }) {
   }, [setIsInitialized, setIsAdmin, setIsVerified, setCurrentUser, initAuth]);
 
   const register = useCallback(
-    ({ name, email, password, password_confirmation }) => {
-      return registerAPI({ name, email, password, password_confirmation })
-        .then(({ user, token }) => {
+    ({ name, email, password, password_confirmation, goCode }) => {
+      return registerAPI({ name, email, password, password_confirmation, goCode })
+        .then(({ user, token, isReviewed }) => {
           if (user != null) {
             setIsAdmin(user.user_type == "Administrator");
             setIsVerified(user.ready_review === "1");
           }
           setCurrentUser(user);
           setToken(token);
-          return true;
+          return {isReviewed: user.ready_review === "1"};
           //return getIntendedUrl(user.user_type == "Administrator");
         })
         .catch((error) => {
@@ -60,15 +60,11 @@ function AuthProvider({ children }) {
     [registerAPI, setCurrentUser, setIsAdmin, setIsVerified, setToken],
   );
 
-  const registerGoCodeUser = useCallback(
-    ({ name, go_code }) => {
-      return registerGoCodeUserAPI({ name, go_code })
-        .then(() => {
-          // register success
-          //return getIntendedUrl(user.user_type == "Administrator");
-        })
+  const getGoCode = useCallback(
+    () => {
+      return getGoCodeAPI()
+        .then((data) => data)
         .catch((error) => {
-          console.error(error);
           throw error;
         });
     },
@@ -76,11 +72,10 @@ function AuthProvider({ children }) {
   );
 
   const login = useCallback(
-    ({ email, password, goCode }) => {
+    ({ email, password }) => {
       return loginAPI({
         email,
         password,
-        goCode,
       })
         .then(({ user, token }) => {
           if (user != null) {
@@ -120,7 +115,7 @@ function AuthProvider({ children }) {
         currentUser,
         isInitialized,
         register,
-        registerGoCodeUser,
+        getGoCode,
         login,
         logout,
         setToken,

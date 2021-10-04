@@ -4,7 +4,6 @@ import Welcome from "../pages/welcome";
 import Home from "../pages/home";
 import Login from "../pages/auth/login";
 import Join from "../pages/auth/join";
-import CreateUser from "../pages/auth/create-user";
 import ForgotPassword from "../pages/auth/forgot-password";
 import ResetPassword from "../pages/auth/reset-password";
 import NotFound from "../pages/404";
@@ -41,7 +40,6 @@ function App() {
           <AuthRoute path="/car-select" component={CarSelect} title="Car Select" />
           <AuthRoute path="/payment-confirm" component={PaymentConfirmation} title="Payment Confirm" />
 
-          <AdminRoute path="/create-user" component={CreateUser} title="Create User" />
           <AdminRoute path="/user-approve" component={UserApproval} title="User Approval" />
           <AdminRoute path="/slot-management" component={SlotManagement} title="Time Slot Management" />
 

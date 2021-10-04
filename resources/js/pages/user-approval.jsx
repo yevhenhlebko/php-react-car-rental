@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect, useState, useCallback } from "react";
+import { useAuth } from '../context/auth';
 import { Link } from "react-router-dom";
 import { getUsers } from "../api/auth";
 import { setUserAction } from "../api/user-approve";
+import CustomModal from "../components/modal";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+
 
 function UserApproval() {
+  const { getGoCode } = useAuth();
   const [actionChanged, setActionChanged] = useState(false);
   const [currentUsers, setCurrentUsers] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
 
   const userAction = (action, id) => {
     setUserAction({
@@ -19,6 +25,23 @@ function UserApproval() {
       })
       .catch((error) => {});
   };
+
+  const handleGoCode = useCallback(() => {
+    getGoCode().then((data) => {
+      setModalContent(() => (
+        <div>
+          <input className="bg-black text-white appearance-none text-center border-b-2 border-gray-200 border-opacity-25 rounded w-full py-1 px-3"
+            defaultValue={data.code} disabled />
+
+          <CopyToClipboard  text={data.code}>
+            <button className="border rounded-2xl mt-4 px-3 py-2 text-white font-inter bg-black w-full font-bold">Copy to clipboard</button>
+          </CopyToClipboard>
+        </div>
+      ));
+      setOpen(true);
+    })
+  }, [getGoCode, setOpen, setModalContent]);
+
   useEffect(() => {
     getUsers().then((users) => {
       setCurrentUsers(users);
@@ -35,12 +58,12 @@ function UserApproval() {
 
       <div className="mt-3 box-border overflow-hidden text-xl form-box-shadow mix-blend-normal rounded-3xl border-grey-light w-3/4 sm:w-5/6 lg:w-11/12 xl:w-4/5 px-8 py-4 bg-black">
         <div className="mb-10 mt-4 text-right">
-          <Link
-            to="/create-user"
+          <button type="button"
+            onClick={handleGoCode}
             className="border right rounded-2xl px-3 py-2 text-white font-inter bg-black w-30 font-bold inline-block"
           >
-            Create GoCode User
-          </Link>
+            Generate GoCode
+          </button>
         </div>
         <div className="overflow-auto lg:overflow-visible mb-4 mt-4">
           <div className="card-body bg-black text-white appearance-none  font-inter rounded w-full py-1 px-3">
@@ -108,6 +131,14 @@ function UserApproval() {
           </div>
         </div>
       </div>
+      <CustomModal
+        header="Copy Code"
+        open={open}
+        show={() => setOpen(true)}
+        hide={() => setOpen(false)}
+        size="tiny"
+        content={modalContent}
+      />
     </div>
   );
 }

@@ -7,15 +7,13 @@ export const login = ({ email, password, goCode }) =>
   }));
 
 // eslint-disable-next-line camelcase
-export const register = ({ email, name, password, password_confirmation, go_code }) =>
+export const register = ({ email, name, password, password_confirmation, goCode }) =>
   client("/api/register", {
-    body: { email, name, password, password_confirmation, go_code },
+    body: { email, name, password, password_confirmation, goCode },
   }).then(({ data: user, meta: { token } }) => ({ user, token }));
 
-export const registerGoCodeUser = ({ name }) =>
-  client("/api/go-code", {
-    body: { name },
-  }).then(({ data }) => data);
+export const getGoCode = () =>
+  client("/api/go-code").then((data) => data);
 
 export const application = ({ name }) =>
   client("/api/application", { body: { name } })

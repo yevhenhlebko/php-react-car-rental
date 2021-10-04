@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { BiLockAlt } from "react-icons/bi";
 import { useAuth } from "../../context/auth";
-import { register } from "../../api/auth";
 import useInputValue from "../../components/input-value";
 import GuestNav from "../../components/guest-nav";
 
@@ -14,6 +13,7 @@ function Join() {
   const email = useInputValue("email");
   const name = useInputValue("name");
   const password = useInputValue("password");
+  const goCode = useInputValue("goCode");
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -22,13 +22,18 @@ function Join() {
       email: email.value,
       password: password.value,
       password_confirmation: password.value,
+      goCode: goCode.value
     })
-      .then(() => {
-        history.push("/home");
+      .then(({isReviewed}) => {
+        if(isReviewed) {
+          history.push("/date-select");
+        } else {
+          history.push("/home");
+        }
       })
       .catch((error) => {
         error.json().then(({ errors }) => {
-          [email, name, password].forEach(({ parseServerError }) => parseServerError(errors));
+          [email, name, password, goCode].forEach(({ parseServerError }) => parseServerError(errors));
         });
       });
   };
@@ -101,6 +106,22 @@ function Join() {
               />
               <BiLockAlt className="text-white fa-icon inline" />
               {password.error && <p className="text-red-500 text-xs pt-2">{password.error}</p>}
+            </div>
+
+
+            <div className="mb-4">
+              <input
+                type="text"
+                id="goCode"
+                name="goCode"
+                placeholder="go code (optional)"
+                className={`bg-black text-white appearance-none border-b-2 md:border-b-2 border-gray-200 border-opacity-25 font-inter rounded w-full py-1 px-3   ${
+                  goCode.error ? "border-red-500" : ""
+                }`}
+                {...goCode.bind}
+              />
+              <BiLockAlt className="text-white fa-icon inline" />
+              {goCode.error && <p className="text-red-500 text-xs pt-2">{goCode.error}</p>}
             </div>
 
             <div className="mb-10 mt-10 flex justify-end">
