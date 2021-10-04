@@ -14,23 +14,23 @@ class LoginController extends Controller
     {   
         //auth user with go code
         $goCode = $request->goCode;
+        $goCode = 12345;
         if ($goCode) {
             $user = DB::table('users')->where('go_code',strval($goCode))->get()->first();
             if(!$user) {
                 return response()->json([
                     'errors' => [
-                        'email' => ['invalid go code.']
+                        'goCode' => ['invalid go code.']
                     ]
                 ], 422); 
             } else {
-                //To Do: contruct a valid token here
                 $email = strval($goCode) . '@mail.com';
                 $token = auth()->attempt(array('email' =>  $email,'password' => strval($goCode)));
                 error_log($token);
                 if (!$token) {
                     return response()->json([
                         'errors' => [
-                            'email' => ['Sorry we couldn\'t sign you in with those details.']
+                            'goCode' => ['invalid go code.']
                         ]
                     ], 422);
                 }
