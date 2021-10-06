@@ -83,7 +83,7 @@ class Mail extends Model
         $user = User::find($userId);
         $subject = '[AJ’s Experience] Registration Status';
         $body = '<html>Hi ' . $user->name .
-                ' Your requeset to join ajsexperience has been ' . $status . '</html> ';
+                ' Your request to join ajsexperience has been ' . $status . '</html> ';
     
         $this ->  mg->messages()->send($this -> domain, [
         'from'    => 'aj@postman.ajsexperience.com',
