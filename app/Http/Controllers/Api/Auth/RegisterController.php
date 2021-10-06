@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\DB;
 use App\GoCodes;
+use App\Mail;
 
 class RegisterController extends Controller
 {
@@ -39,6 +40,11 @@ class RegisterController extends Controller
 
         if (!$token = auth()->attempt($request->only(['email', 'password']))) {
             return abort(401);
+        }
+
+        if(!$goCode) {
+            $mail = new Mail();
+            $mail->sendUserRegEmail($user -> id);
         }
 
         return (new UserResource($user))

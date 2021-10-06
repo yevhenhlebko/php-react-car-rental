@@ -120,4 +120,6 @@ return [
         ],
     ],
 
+    'MailGunAPI' => env('MAIL_GUN_API'),
+
 ];

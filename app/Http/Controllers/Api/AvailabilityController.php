@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Reservation;
+use App\Mail;
 
 class AvailabilityController extends Controller
 {
@@ -19,6 +20,10 @@ class AvailabilityController extends Controller
     public function confirmReservation(Request $request) {
         $reservationDb = new Reservation();
         $result = $reservationDb->confirmReservation($request->id);
+
+        //$mail = new Mail();
+        //$mail->sendReservationConStatusEmail($request->userId, $request->carId, 'approved');
+
         return response()->json(array(
             'reservation' => $result,
         ));
@@ -26,6 +31,10 @@ class AvailabilityController extends Controller
     public function rejectReservation(Request $request) {
         $reservationDb = new Reservation();
         $result = $reservationDb->rejectReservation($request->id);
+
+        //$mail = new Mail();
+        //$mail->sendReservationConStatusEmail($request->userId, $request->carId, 'rejected');
+
         return response()->json(array(
             'reservation' => $result,
         ));
@@ -34,6 +43,9 @@ class AvailabilityController extends Controller
     public function pendReservation(Request $request) {
         $reservationDb = new Reservation();
         $result = $reservationDb->pendReservation($request->startDate, $request->endDate, $request->carId, $request->userId, $request->hours);
+        $mail = new Mail();
+        $mail->sendReservationEmail($request->userId, $request->carId, $request->startDate, $request->endDate, $request->hours);
+
         return response()->json(array(
             'reservation' => $result,
         ));
