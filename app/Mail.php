@@ -7,6 +7,7 @@ require '../config/mail.php';
 use Mailgun\Mailgun;
 use App\User;
 use App\Car;
+use App\Reservation;
 use Carbon\Carbon;
 
 class Mail extends Model
@@ -65,9 +66,10 @@ class Mail extends Model
         ]);
     }
 
-    public function sendReservationConStatusEmail($userId, $carId, $status) {
-        $user = User::find($userId);
-        $car = Car::find($carId);
+    public function sendReservationConStatusEmail($reservationId, $status) {
+        $reservation = Reservation::find($reservationId);
+        $car = Car::find($reservation->car_id);
+        $user = User::find($reservation->user_id);
         $subject = '[AJ’s Experience] Reservation Status';
         $body = '<html>Hi ' . $user->name .
                 ' Your Reservation for ' . $car ->name . ' has been ' . $status . '</html> ';
