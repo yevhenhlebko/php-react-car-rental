@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\DB;
+use App\Mail;
 
 class MeController extends Controller
 {
@@ -24,24 +25,32 @@ class MeController extends Controller
     {
         var_dump('setUserAction',$request->action,$request->id);
         $affected = false;
+        $status;
         if( strcmp($request->action , 'accept' ) == 0 )
-        {
+        {   
+            $status = 'approved';
             $affected = DB::table('users')
                             ->where('id', $request->id)
                             ->update(['ready_review' => 1]);
         }
         if( strcmp($request->action , 'reject' ) == 0 )
         {
+            $status = 'rejected';
             $affected = DB::table('users')
                             ->where('id', $request->id)
                             ->update(['ready_review' => 0]);
         }
         if( strcmp($request->action , 'delete' ) == 0 )
         {
+            $status = 'rejected';
             $affected = DB::table('users')
                             ->where('id', $request->id)
                             ->delete();
         }
+
+        $mail = new Mail();
+        $mail->sendUserRegStatusEmail($request->id, $status);
+
         return response()->json(['status' => $affected], 200);
     }
 }
