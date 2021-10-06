@@ -21,8 +21,8 @@ class AvailabilityController extends Controller
         $reservationDb = new Reservation();
         $result = $reservationDb->confirmReservation($request->id);
 
-        //$mail = new Mail();
-        //$mail->sendReservationConStatusEmail($request->userId, $request->carId, 'approved');
+        $mail = new Mail();
+        $mail->sendReservationConStatusEmail($request->id, 'approved');
 
         return response()->json(array(
             'reservation' => $result,
@@ -32,8 +32,8 @@ class AvailabilityController extends Controller
         $reservationDb = new Reservation();
         $result = $reservationDb->rejectReservation($request->id);
 
-        //$mail = new Mail();
-        //$mail->sendReservationConStatusEmail($request->userId, $request->carId, 'rejected');
+        $mail = new Mail();
+        $mail->sendReservationConStatusEmail($request->id, 'rejected');
 
         return response()->json(array(
             'reservation' => $result,
