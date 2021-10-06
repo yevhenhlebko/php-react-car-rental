@@ -70,7 +70,7 @@ class Mail extends Model
         $car = Car::find($carId);
         $subject = '[AJ’s Experience] Reservation Status';
         $body = '<html>Hi ' . $user->name .
-                'Your Reservation for ' . $car ->name . ' has been ' . $status . '</html> ';
+                ' Your Reservation for ' . $car ->name . ' has been ' . $status . '</html> ';
         $this ->  mg->messages()->send($this -> domain, [
         'from'    => 'aj@postman.ajsexperience.com',
         'to'      => $user->email,
