@@ -15,17 +15,17 @@ class CarsTableSeeder extends Seeder
         DB::table('cars')->insert([
             'name' => '2021 Nissan Skyeline GTR',
             'image' => '/images/car-image-1.png',
-            'rate' => 100
+            'rate' => 600
         ]);
         DB::table('cars')->insert([
             'name' => 'Lamborghini Huracan',
             'image' => '/images/car-image-2.png',
-            'rate' => 150
+            'rate' => 700
         ]);
         DB::table('cars')->insert([
             'name' => '2021 Chevrolet Corvette 3LT Z51',
             'image' => '/images/car-image-3.png',
-            'rate' => 190
+            'rate' => 500
         ]);
     }
 }
