@@ -26,7 +26,7 @@ function PaymentConfirmation() {
           <div className="width-fit-content text-xl md:text-3xl font-thin text-center">
             Use your Zelle account to send <span className="font-bold">${totalCost}</span> to:
           </div>
-          <span className="mt-5 width-fit-content text-xl md:text-3xl font-bold">815-260-7682</span>
+          <span className="mt-5 width-fit-content text-xl md:text-3xl font-bold">216-375-7533</span>
           <div className="mt-5 width-fit-content text-center text-base md:text-lg font-thin w-full md:w-2/3">
             Once payment has been received, a confirmation email will be sent to your address on file.
           </div>
