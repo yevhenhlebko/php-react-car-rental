@@ -84,7 +84,7 @@ function Login() {
                 Create Account
               </Link> | 
               <Link to="/forgot-password" className="text-sm text-white font-inter font-bold">
-                Forget password?
+                Forget Password?
               </Link>
             </div>
 
