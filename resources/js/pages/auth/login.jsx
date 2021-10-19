@@ -80,6 +80,9 @@ function Login() {
 
 
             <div className="mb-3 flex justify-end">
+            <Link to="/join" className="text-sm text-white font-inter font-bold">
+                Create Account
+              </Link> | 
               <Link to="/forgot-password" className="text-sm text-white font-inter font-bold">
                 Forget password?
               </Link>
