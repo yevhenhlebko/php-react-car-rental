@@ -19,8 +19,8 @@ Route::name('api.')->namespace('Api')->group(function () {
             Route::post('login', 'LoginController')->name('login');
             Route::post('register', 'RegisterController')->name('register');
 
-          // Password Reset Routes...
-            Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail');
+            // Password Reset Routes...
+            Route::post('password/email', 'ForgotPasswordController@forgot');
             Route::post('password/reset', 'ResetPasswordController@reset');
         });
     });

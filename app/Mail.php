@@ -94,4 +94,19 @@ class Mail extends Model
         'html'    => $body,
         ]);
     }
+
+    // Send link for reset password
+    public function sendForgotPasswordEmail($email, $token) {
+        $user = User::whereEmail($email)->first();
+        $subject = '[AJ’s Experience] Forgot Password';
+        $body = '<html>Hi ' . $user->name .
+                ',<br/>Please click the following link to reset your password.<br/><a href="https://www.ajsexperience.com/reset-password/' . $token . '">Click here</a></html> ';
+    
+        $this ->  mg->messages()->send($this -> domain, [
+        'from'    => 'aj@postman.ajsexperience.com',
+        'to'      => $user->email,
+        'subject' => $subject,
+        'html'    => $body,
+        ]);
+    }
 }
