@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Carbon\Carbon; 
+use DB;
+
+use App\Mail;
 
 class ForgotPasswordController extends Controller
 {
@@ -18,7 +22,6 @@ class ForgotPasswordController extends Controller
     | your application to your users. Feel free to explore this trait.
     |
     */
-    use SendsPasswordResetEmails;
 
     /**
      * Create a new controller instance.
@@ -30,27 +33,27 @@ class ForgotPasswordController extends Controller
         $this->middleware('guest');
     }
 
-    /**
-     * Get the response for a successful password reset link.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
-     */
-    protected function sendResetLinkResponse(Request $request, $response)
-    {
-        return response()->json(['status' => trans($response)], 200);
-    }
+    // create forgot password token and send it in email
+    public function forgot(Request $request) {
+        $request->validate([
+            'email' => 'required|email|exists:users',
+        ]);
 
-    /**
-     * Get the response for a failed password reset link.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
-     */
-    protected function sendResetLinkFailedResponse(Request $request, $response)
-    {
-        return response()->json(['errors' => ['email' => [trans($response)]]], 400);
+        // create token
+        $token = Str::random(64);
+
+        // add record to db
+        DB::table('password_resets')->insert([
+            'email' => $request->email, 
+            'token' => $token, 
+            'created_at' => Carbon::now()
+        ]);
+
+        // send email
+        $mail = new Mail();
+        $mail->sendForgotPasswordEmail($request->email, $token);
+
+        // return success state
+        return response()->json(['message' => 'Reset password link sent on your email.']);
     }
 }
