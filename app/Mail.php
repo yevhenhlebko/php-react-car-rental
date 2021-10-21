@@ -100,7 +100,7 @@ class Mail extends Model
         $user = User::whereEmail($email)->first();
         $subject = '[AJ’s Experience] Forgot Password';
         $body = '<html>Hi ' . $user->name .
-                ',<br/>Please click the following link to reset your password.<br/><a href="https://www.ajsexperience.com/password/reset/' . $token . '">Click here</a></html> ';
+                ',<br/>Please click the following link to reset your password.<br/><a href="https://www.ajsexperience.com/reset-password/' . $token . '">Click here</a></html> ';
     
         $this ->  mg->messages()->send($this -> domain, [
         'from'    => 'aj@postman.ajsexperience.com',
