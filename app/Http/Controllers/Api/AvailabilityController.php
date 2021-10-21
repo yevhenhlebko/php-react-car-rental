@@ -30,7 +30,7 @@ class AvailabilityController extends Controller
     }
     public function rejectReservation(Request $request) {
         $reservationDb = new Reservation();
-        $result = $reservationDb->rejectReservation($request->id);
+        $result = $reservationDb->rejectReservation($request->id, $request->reason);
 
         $mail = new Mail();
         $mail->sendReservationConStatusEmail($request->id, 'rejected');

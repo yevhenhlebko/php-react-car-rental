@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import moment from "moment-timezone";
 import { Link } from "react-router-dom";
+
+import Popup from "../components/popup";
 import { getReservations, confirmReservation, rejectReservation } from "../api/availability";
 
 function SlotManagement() {
@@ -25,8 +27,8 @@ function SlotManagement() {
   );
 
   const handleReject = useCallback(
-    (id) => {
-      rejectReservation({ id }).then((response) => {
+    (id, reason) => {
+      rejectReservation({ id, reason }).then((response) => {
         setUpdate(update + 1);
       });
     },
@@ -37,7 +39,7 @@ function SlotManagement() {
     <div className="flex justify-center items-center w-full flex-col py-4 min-h-screen bg-black">
       <div className="p-8 flex flex-col items-center">
         <div className="ajs-header text-center text-6xl leading-loose text-white font-bungee font-bold">
-            <img src="/images/icons/ajexperience.svg" />
+          <img src="/images/icons/ajexperience.svg" />
         </div>
       </div>
 
@@ -63,10 +65,13 @@ function SlotManagement() {
                         <td className="px-3">{reservation.name}</td>
                         <td className="px-3">{reservation.carName}</td>
                         <td className="px-3">
-                          {moment.utc(reservation.reserved_date_time,).tz("America/Los_Angeles").format("MM/DD/YYYY hh:mm A")}
+                          {moment
+                            .utc(reservation.reserved_date_time)
+                            .tz("America/Los_Angeles")
+                            .format("MM/DD/YYYY hh:mm A")}
                         </td>
                         <td className="px-3">
-                          {moment.utc(reservation.due_date_time,).tz("America/Los_Angeles").format("MM/DD/YYYY hh:mm A")}
+                          {moment.utc(reservation.due_date_time).tz("America/Los_Angeles").format("MM/DD/YYYY hh:mm A")}
                         </td>
                         <td className="px-3">
                           {reservation.status == 0 ? "Pending" : reservation.status == 1 ? "Accepted" : "Rejected"}
@@ -86,14 +91,20 @@ function SlotManagement() {
                                 </Link>
                               </p>
                             )}
-                            <p className="flex flex-col px-4 py-4 m-auto" onClick={() => handleReject(reservation.id)}>
-                              <Link
-                                to="#"
-                                className="border rounded-2xl px-3 py-2 text-white font-inter bg-black w-30 font-bold"
-                              >
-                                Reject
-                              </Link>
-                            </p>
+                            <Popup
+                              id={reservation.id}
+                              onSubmit={handleReject}
+                              trigger={
+                                <p className="flex flex-col px-4 py-4 m-auto">
+                                  <Link
+                                    to="#"
+                                    className="border rounded-2xl px-3 py-2 text-white font-inter bg-black w-30 font-bold"
+                                  >
+                                    Reject
+                                  </Link>
+                                </p>
+                              }
+                            />
                           </div>
                         </td>
                       </tr>
