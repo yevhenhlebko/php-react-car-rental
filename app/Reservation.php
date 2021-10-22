@@ -65,10 +65,16 @@ class Reservation extends Model
         }
     }
 
-    public function rejectReservation($id) {
+    public function rejectReservation($id, $reason) {
         try {
             $reservations = Reservation::find($id);
             $reservations->status = 2;
+
+            // add reason
+            if ($reason !== null) {
+                $reservations->reason = $reason;
+            }
+
             $reservations->save();
             return $reservations;
         } catch(Exception $e) {

@@ -28,12 +28,22 @@ class AvailabilityController extends Controller
             'reservation' => $result,
         ));
     }
+
     public function rejectReservation(Request $request) {
+        // Input validation
+        $request->validate([
+            'id' => 'required|exists:reservations',
+            'reject' => 'nullable|string|max:255'
+        ]);
+
         $reservationDb = new Reservation();
-        $result = $reservationDb->rejectReservation($request->id);
+        $reason = !isset($request->reason) || trim($request->reason) === '' ? null : $request->reason;
+
+        // update db
+        $result = $reservationDb->rejectReservation($request->id, $reason);
 
         $mail = new Mail();
-        $mail->sendReservationConStatusEmail($request->id, 'rejected');
+        $mail->sendReservationConStatusEmail($request->id, 'rejected', $reason);
 
         return response()->json(array(
             'reservation' => $result,

@@ -78,11 +78,11 @@ function Login() {
               <BiLockAlt className="text-white fa-icon inline" />
             </div>
 
-
             <div className="mb-3 flex justify-end">
-            <Link to="/join" className="text-sm text-white font-inter font-bold">
+              <Link to="/join" className="text-sm text-white font-inter font-bold">
                 Create Account
-              </Link> | 
+              </Link>
+              |||
               <Link to="/forgot-password" className="text-sm text-white font-inter font-bold">
                 Forget Password?
               </Link>

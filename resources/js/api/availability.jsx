@@ -15,8 +15,8 @@ export const confirmReservation = ({ id }) =>
     .then((data) => data)
     .catch(() => null);
 
-export const rejectReservation = ({ id }) =>
-  client(`/api/reservation/reject`, { method: "PUT", body: { id } })
+export const rejectReservation = ({ id, reason }) =>
+  client(`/api/reservation/reject`, { method: "PUT", body: reason && reason.length ? { id, reason } : { id } })
     .then((data) => data)
     .catch(() => null);
 
