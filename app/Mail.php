@@ -66,13 +66,20 @@ class Mail extends Model
         ]);
     }
 
-    public function sendReservationConStatusEmail($reservationId, $status) {
+    public function sendReservationConStatusEmail($reservationId, $status, $reason = null) {
         $reservation = Reservation::find($reservationId);
         $car = Car::find($reservation->car_id);
         $user = User::find($reservation->user_id);
         $subject = '[AJ’s Experience] Reservation Status';
-        $body = '<html>Hi ' . $user->name .
-                ' Your Reservation for ' . $car ->name . ' has been ' . $status . '</html> ';
+        $body_content = 'Hi ' . $user->name .
+            ' Your Reservation for ' . $car ->name . ' has been ' . $status;
+
+        // add reason for reject
+        if ($status === 'rejected' && $reason !== null) {
+            $body_content .= '<br/>Reject Reason: ' . $reason;
+        }
+        $body = '<html>' . $body_content . '</html>';
+
         $this ->  mg->messages()->send($this -> domain, [
         'from'    => 'aj@postman.ajsexperience.com',
         'to'      => $user->email,

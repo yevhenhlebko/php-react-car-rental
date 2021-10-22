@@ -3,47 +3,55 @@ import { Popup } from "semantic-ui-react";
 
 function ControlledPopup(props) {
   const { id, onSubmit, trigger } = props;
-  const [showPopup, setShowPopUp] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [reason, setReason] = useState("");
 
-  const handleSubmit = (reason) => {
-    setShowPopUp(false);
+  const handleOpen = () => {
+    setShowPopup(true);
+    setReason("");
+  };
+
+  const handleClose = () => {
+    setShowPopup(false);
+    setReason("");
+  };
+
+  const handleSubmit = () => {
     onSubmit(id, reason);
+    setShowPopup(false);
+    setReason("");
+  };
+
+  const handleChangeReason = (e) => {
+    setReason(e.target.value);
   };
 
   return (
     <Popup
       content={
         <div className="text-white bg-black -mx-4">
-          <label className="block text-center text-white text-xl font-bold mb-2">Select Reason</label>
-          <ul>
-            <li
-              className="text-left block py-2 px-4 text-white cursor-pointer font-normal hover:font-bold"
-              onClick={() => handleSubmit(id, 2)}
-            >
-              User Request
-            </li>
-            <li
-              className="text-left block py-2 px-4 text-white cursor-pointer font-normal hover:font-bold"
-              onClick={() => handleSubmit(id, 3)}
-            >
-              User's not available
-            </li>
-            <li
-              className="text-left block py-2 px-4 text-white cursor-pointer font-normal hover:font-bold"
-              onClick={() => handleSubmit(id, 4)}
-            >
-              Other
-            </li>
-          </ul>
+          <label className="block text-center text-white text-xl font-bold mb-2">Reason(optional)</label>
+          <textarea
+            className="mx-4 my-2 p-1 text-white bg-black border outline-none"
+            maxLength="255"
+            onChange={handleChangeReason}
+          />
+          <button
+            className="block border rounded-2xl px-3 py-2 text-white font-inter bg-black w-30 font-bold m-auto"
+            onClick={handleSubmit}
+          >
+            Confirm
+          </button>
         </div>
       }
       on="click"
       pinned
       basic
+      position="top center"
       trigger={trigger}
       open={showPopup}
-      onOpen={() => setShowPopUp(true)}
-      onClose={() => setShowPopUp(false)}
+      onOpen={handleOpen}
+      onClose={handleClose}
     />
   );
 }
