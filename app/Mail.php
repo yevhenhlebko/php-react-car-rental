@@ -75,8 +75,12 @@ class Mail extends Model
             ' Your Reservation for ' . $car ->name . ' has been ' . $status;
 
         // add reason for reject
-        if ($status === 'rejected' && $reason !== null) {
-            $body_content .= '<br/>Reject Reason: ' . $reason;
+        if ($status === 'rejected') {
+            if ($reason !== null) {
+                $body_content .= '<br/>Reject Reason: ' . $reason;
+            } else {
+                $body_content .= '<br/>Reject Reason: Not given';
+            }
         }
         $body = '<html>' . $body_content . '</html>';
 
