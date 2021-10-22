@@ -2,12 +2,15 @@ import React, { useCallback, useEffect, useState } from "react";
 import moment from "moment-timezone";
 import { Link } from "react-router-dom";
 
-import Popup from "../components/popup";
+import Modal from "../components/reason-modal";
 import { getReservations, confirmReservation, rejectReservation } from "../api/availability";
 
 function SlotManagement() {
   const [update, setUpdate] = useState(0);
   const [reservations, setReservations] = useState([]);
+  const [id, setId] = useState(null);
+  const [reason, setReason] = useState("");
+  const [showReasonModal, setShowReasonModal] = useState(false);
 
   useEffect(() => {
     getReservations().then((response) => {
@@ -30,10 +33,27 @@ function SlotManagement() {
     (id, reason) => {
       rejectReservation({ id, reason }).then((response) => {
         setUpdate(update + 1);
+        handleCloseModal();
       });
     },
     [rejectReservation, setUpdate, update],
   );
+
+  const handleChangeReason = (e) => {
+    setReason(e.target.value);
+  };
+
+  const handleCloseModal = () => {
+    setId(null);
+    setReason("");
+    setShowReasonModal(false);
+  };
+
+  const handleClickReject = (id) => {
+    setId(id);
+    setReason("");
+    setShowReasonModal(true);
+  };
 
   return (
     <div className="flex justify-center items-center w-full flex-col py-4 min-h-screen bg-black">
@@ -91,20 +111,17 @@ function SlotManagement() {
                                 </Link>
                               </p>
                             )}
-                            <Popup
-                              id={reservation.id}
-                              onSubmit={handleReject}
-                              trigger={
-                                <p className="flex flex-col px-4 py-4 m-auto">
-                                  <Link
-                                    to="#"
-                                    className="border rounded-2xl px-3 py-2 text-white font-inter bg-black w-30 font-bold"
-                                  >
-                                    Reject
-                                  </Link>
-                                </p>
-                              }
-                            />
+                            <p
+                              className="flex flex-col px-4 py-4 m-auto"
+                              onClick={() => handleClickReject(reservation.id)}
+                            >
+                              <Link
+                                to="#"
+                                className="border rounded-2xl px-3 py-2 text-white font-inter bg-black w-30 font-bold"
+                              >
+                                Reject
+                              </Link>
+                            </p>
                           </div>
                         </td>
                       </tr>
@@ -119,6 +136,15 @@ function SlotManagement() {
           </div>
         </div>
       </div>
+      <Modal
+        id={id}
+        reason={reason}
+        open={showReasonModal}
+        size="tiny"
+        onClose={handleCloseModal}
+        onChange={handleChangeReason}
+        onSubmit={handleReject}
+      />
     </div>
   );
 }
